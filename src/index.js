@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
-import bodyParser, { text } from 'body-parser';
+import bodyParser from 'body-parser';
 
 const port = 8080;
 
