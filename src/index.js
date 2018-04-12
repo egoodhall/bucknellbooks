@@ -2,8 +2,14 @@ import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import mongoCfg from './mongoCfg';
+import { get as getUser, put as putUser, post as postUser } from './api/users';
 
 const port = 8080;
+
+// Connect mongoose driver to MongoDB
+mongoose.connect(`mongodb://${mongoCfg.user}:${mongoCfg.pass}@${mongoCfg.host}:${mongoCfg.port}/${mongoCfg.db}`);
 
 const app = express();
 
@@ -33,10 +39,9 @@ apiRouter.use('/books', textbookRouter); // Attach textbook root
 
 // Users
 const userRouter = new express.Router();
-userRouter.get('/'); // Get all users
-userRouter.get('/:uid'); // Retrieve a user
-userRouter.post('/:uid'); // Create a user
-userRouter.put('/:uid'); // Modify a user
+userRouter.get('/:uid', getUser); // Retrieve a user
+userRouter.post('/:uid', postUser); // Create a user
+userRouter.put('/:uid', putUser); // Modify a user
 userRouter.use('/:uid/books', textbookRouter); // Allow all textbook queries
 apiRouter.use('/users', userRouter); // Attach user root
 
