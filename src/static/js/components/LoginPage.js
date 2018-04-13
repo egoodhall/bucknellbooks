@@ -1,10 +1,41 @@
 import React, {Component} from 'react';
 
-class LoginPage extends Component {
+class LoginPage extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.login = this.login.bind(this);
+  }
+
+  componentDidMount() {
+    this.renderButton();
+  }
+
+  renderButton() {
+    window.gapi.signin2.render('my-signin2', {
+      'scope': 'https://www.googleapis.com/auth/plus.login',
+      'width': 240,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': this.login,
+      'onfailure': console.log('login failed')
+    });
+  }
+
+  login(){
+  	sessionStorage.setItem("isAuth", true);
+  	this.props.auth()
+  };
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+
     return (
-      <h1>This is the login page!</h1>
+      <div>
+        <p> Please sign in to view:  {from.pathname}</p>
+        <div className="my=signin2" id="my-signin2"></div>
+      </div>
     );
   }
 }
