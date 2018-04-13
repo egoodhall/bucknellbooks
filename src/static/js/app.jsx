@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, hashHistory } from 'react-router';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import SearchPage from './components/SearchPage';
 import LoginPage from './components/LoginPage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -13,7 +13,7 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
 const AppContainer = () => (
   <MuiThemeProvider>
-    <Router history={hashHistory}>
+    <Router>
       <div>
         <Route exact path='/' component={LoginPage}/>
         <Route path='/search' component={SearchPage}/>
