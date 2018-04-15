@@ -1,9 +1,7 @@
 import User from './model.js';
-import { get, put, post } from './endpoints.js';
+import UserEndpoints from './endpoints.js';
 
 export {
   User,
-  get,
-  put,
-  post
+  UserEndpoints
 };

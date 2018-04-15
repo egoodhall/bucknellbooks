@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    container_name: books_elasticsearch
+    expose:
+      - 9200
+    ports:
+      - 9200:9200
+    depends_on:
+      - db
+  express:
+    container_name: books_express
+    build: ./build
+    links:
+      - elasticsearch
+      - db
+    ports:
+      - 8080:8080
+    depends_on:
+      - elasticsearch
+      - db
+  db:
+    container_name: books_mongodb
+    build: ./mongodb
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
