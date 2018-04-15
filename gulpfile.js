@@ -37,6 +37,8 @@ gulp.task('build', ['build-ui'], () => {
   gulp.src(['src/**/*.js', '!src/**/static/**/*']).pipe(babel()).pipe(gulp.dest(buildDir));
   gulp.src('src/**/*.json').pipe(gulp.dest(buildDir));
 
+  gulp.src(['src/Dockerfile', 'src/.dockerignore', 'yarn.lock', 'src/start.sh']).pipe(gulp.dest(buildDir));
+
   // Move static files
   gulp.src(path.join(staticDir, 'imageFiles', '*')).pipe(gulp.dest(path.join(buildDir, 'static', 'imageFiles')));
   gulp.src(path.join(staticDir, 'index.html')).pipe(gulp.dest(path.join(buildDir, 'static')));

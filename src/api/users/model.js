@@ -1,13 +1,9 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: Number,
-    unique: true
-  },
+  _id: Number,
   name: String,
-  email: String,
-  books: Array
+  email: String
 });
 
 export default mongoose.model('User', userSchema);

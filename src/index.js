@@ -3,13 +3,18 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import mongoCfg from './mongoCfg';
-import { get as getUser, put as putUser, post as postUser } from './api/users';
+import cfg from './cfg';
+import { UserEndpoints } from './api/users';
+import { BookEndpoints } from './api/books';
+import { SearchEndpoints } from './api/search';
 
 const port = 8080;
 
+// Load the mongo config
+const { mongo } = cfg;
+
 // Connect mongoose driver to MongoDB
-mongoose.connect(`mongodb://${mongoCfg.user}:${mongoCfg.pass}@${mongoCfg.host}:${mongoCfg.port}/${mongoCfg.db}`);
+mongoose.connect(`mongodb://${mongo.host}:${mongo.port}/${mongo.db}`);
 
 const app = express();
 
@@ -24,29 +29,32 @@ app.use('/', express.static(staticDir)); // Serve static files through the root 
 
 // Add API routes
 const apiRouter = new express.Router();
+app.use('/api', apiRouter); // Attach API route
 
 // Search
-apiRouter.get('/search'); // Attach search route
+apiRouter.get('/search', SearchEndpoints.search); // Attach search route
 
 // Textbooks
 const textbookRouter = new express.Router();
-textbookRouter.get('/'); // Retrieve all textbooks
-textbookRouter.post('/'); // Create a new textbook
-textbookRouter.get('/:id'); // Retrieve the textbook with id
-textbookRouter.put('/:id'); // Modify a textbook
-textbookRouter.delete('/:id'); // Delete the textbook with id
 apiRouter.use('/books', textbookRouter); // Attach textbook root
+textbookRouter.get('/', BookEndpoints.getItem); // Retrieve all textbooks
+textbookRouter.get('/:id', BookEndpoints.getItem); // Retrieve the textbook with id
+textbookRouter.put('/:id', BookEndpoints.putItem); // Modify a textbook
+textbookRouter.delete('/:id', BookEndpoints.deleteItem); // Delete the textbook with id
 
-// Users
+
 const userRouter = new express.Router();
-userRouter.get('/:uid', getUser); // Retrieve a user
-userRouter.post('/:uid', postUser); // Create a user
-userRouter.put('/:uid', putUser); // Modify a user
-userRouter.use('/:uid/books', textbookRouter); // Allow all textbook queries
 apiRouter.use('/users', userRouter); // Attach user root
+// Users
+userRouter.get('/:uid', UserEndpoints.getItem); // Retrieve a user
+userRouter.post('/:uid', UserEndpoints.postItem); // Create a user
 
+// Book actions specific to a user
+userRouter.get('/:uid/books', BookEndpoints.getItem); // Get user's textbooks
+userRouter.post('/:uid/books', BookEndpoints.postItem); // Create a textbook for a user
 
-app.use('/api', apiRouter); // Mount everything behind the /api sub-route
+// Health Test
+apiRouter.get('/ping', (req, res) => res.send('pong')); // Ping Pong
 
 // Error handling (log it and return a 500 error)
 app.use((err, req, res, next) => {
