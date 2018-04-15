@@ -6,8 +6,6 @@ services:
     container_name: books_elasticsearch
     expose:
       - 9200
-    ports:
-      - 9200:9200
     depends_on:
       - db
   express:
@@ -26,5 +24,3 @@ services:
     build: ./mongodb
     expose:
       - 27017
-    ports:
-      - 27017:27017
