@@ -17,7 +17,6 @@ const respondData = (req, res) => {
 };
 
 const search = (req, res) => {
-  console.log('Sending search for:', req.query.text);
   Book.search({
     multi_match: {
       query: req.query.text,
