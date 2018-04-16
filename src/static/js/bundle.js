@@ -63136,12 +63136,7 @@ var App = function (_React$Component) {
   function App() {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-
-    _this.state = {
-      isAuthenticated: false
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
   }
 
   _createClass(App, [{
@@ -63181,6 +63176,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/*
+Page responsible for logging the user in
+*/
 var LoginPage = function (_React$Component) {
   _inherits(LoginPage, _React$Component);
 
@@ -63198,6 +63196,9 @@ var LoginPage = function (_React$Component) {
     value: function componentDidMount() {
       this.renderButton();
     }
+
+    //render google sign in button
+
   }, {
     key: 'renderButton',
     value: function renderButton() {
@@ -63211,10 +63212,13 @@ var LoginPage = function (_React$Component) {
         'onfailure': console.log('login failed')
       });
     }
+
+    //begin session for user
+
   }, {
     key: 'login',
     value: function login(info) {
-
+      alert("Login Success Callback");
       var user = { "firstName": info.w3.ofa, "lastName": info.w3.wea, "fullName": info.w3.ig, "email": info.w3.U3 };
       sessionStorage.setItem("isAuth", true);
       sessionStorage.setItem("user", JSON.stringify(user));
@@ -63285,6 +63289,11 @@ var SearchPage = function (_Component) {
   }
 
   _createClass(SearchPage, [{
+    key: 'signOutClick',
+    value: function signOutClick() {
+      this.props.signOut();
+    }
+  }, {
     key: 'componentWillMount',
     value: function componentWillMount() {}
   }, {
@@ -63293,7 +63302,6 @@ var SearchPage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("Rendering Search Page");
       return _react2.default.createElement(
         'div',
         null,
@@ -63302,7 +63310,8 @@ var SearchPage = function (_Component) {
           'h1',
           null,
           'This is the search page!'
-        )
+        ),
+        _react2.default.createElement(_materialUi.RaisedButton, { label: 'Sign Out', primary: true, onClick: this.signOutClick.bind(this) })
       );
     }
   }]);
@@ -63439,8 +63448,8 @@ var Navigation = function (_React$Component) {
   }
 
   _createClass(Navigation, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       this.authenticate();
     }
 
@@ -63464,8 +63473,11 @@ var Navigation = function (_React$Component) {
   }, {
     key: 'signOut',
     value: function signOut() {
-      this.setState({ isAuthenticated: false });
       sessionStorage.setItem("isAuth", false);
+      var authInstance = window.gapi.auth2.getAuthInstance();
+      authInstance.disconnect();
+      authInstance.signOut();
+      this.setState({ isAuthenticated: false });
     }
   }, {
     key: 'render',
@@ -63473,26 +63485,25 @@ var Navigation = function (_React$Component) {
       var _this2 = this;
 
       var isAuth = this.state.isAuthenticated;
-
       return _react2.default.createElement(
         _reactRouterDom.HashRouter,
         null,
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/',
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login',
             render: function render(routeProps) {
               return isAuth ? _react2.default.createElement(_reactRouterDom.Redirect, {
                 to: {
-                  pathname: '/search',
+                  pathname: '/',
                   state: { from: routeProps.location }
                 } }) : _react2.default.createElement(_LoginPage2.default, _extends({}, routeProps, { auth: _this2.authenticate.bind(_this2) }));
             } }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/search',
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/',
             render: function render(routeProps) {
               return isAuth ? _react2.default.createElement(_SearchPage2.default, _extends({}, routeProps, { signOut: _this2.signOut.bind(_this2) })) : _react2.default.createElement(_reactRouterDom.Redirect, {
                 to: {
-                  pathname: '/',
+                  pathname: '/login',
                   state: { from: routeProps.location }
                 }
               });

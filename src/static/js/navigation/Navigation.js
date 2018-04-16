@@ -12,7 +12,7 @@ class Navigation extends React.Component{
     this.state = { isAuthenticated: false } //navigation keeps track of authentication state
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.authenticate();
   }
 
@@ -29,36 +29,38 @@ class Navigation extends React.Component{
 
   /* Sign user out of session */
   signOut(){
-    this.setState({isAuthenticated: false});
     sessionStorage.setItem("isAuth", false);
+    let authInstance = window.gapi.auth2.getAuthInstance()
+    authInstance.disconnect();
+    authInstance.signOut()
+    this.setState({isAuthenticated: false});
   }
 
 
   render(){
     let isAuth = this.state.isAuthenticated;
-
     return (
 
         <Router>
           <div>
-            <Route exact path='/' 
+            <Route exact path='/login' 
                 render={(routeProps) => (isAuth) ? (
                   <Redirect
                     to={{
-                      pathname: '/search',
+                      pathname: '/',
                       state: { from: routeProps.location }
                     }} />
               ) : (
                 <LoginPage {...routeProps} auth={this.authenticate.bind(this)}/>
             )} />
 
-            <Route exact path='/search'
+            <Route path='/'
                 render={(routeProps) => isAuth ? (
                     <SearchPage {...routeProps} signOut={this.signOut.bind(this)}/>
                   ) : (
                     <Redirect
                       to={{
-                        pathname: '/',
+                        pathname: '/login',
                         state: { from: routeProps.location }
                       }}
                     />
