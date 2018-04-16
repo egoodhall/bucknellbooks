@@ -63218,19 +63218,19 @@ var LoginPage = function (_React$Component) {
   }, {
     key: 'login',
     value: function login(info) {
-      alert("Login Success Callback");
-      var user = { "firstName": info.w3.ofa, "lastName": info.w3.wea, "fullName": info.w3.ig, "email": info.w3.U3 };
-      sessionStorage.setItem("isAuth", true);
-      sessionStorage.setItem("user", JSON.stringify(user));
-      sessionStorage.setItem("beginSession", true);
+      alert('Login Success Callback');
+      var user = { 'firstName': info.w3.ofa, 'lastName': info.w3.wea, 'fullName': info.w3.ig, 'email': info.w3.U3 };
+      sessionStorage.setItem('isAuth', true);
+      sessionStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('beginSession', true);
       this.props.auth();
     }
   }, {
     key: 'render',
     value: function render() {
-      console.log("Rendering Login Page");
+      console.log('Rendering Login Page');
 
-      var _ref = this.props.location.state || { from: { pathname: "/" } },
+      var _ref = this.props.location.state || { from: { pathname: '/' } },
           from = _ref.from;
 
       return _react2.default.createElement(
@@ -63239,7 +63239,7 @@ var LoginPage = function (_React$Component) {
         _react2.default.createElement(
           'p',
           null,
-          ' Please sign in to view:  ',
+          ' Please sign in to view: ',
           from.pathname
         ),
         _react2.default.createElement('div', { id: 'my-signin2' })

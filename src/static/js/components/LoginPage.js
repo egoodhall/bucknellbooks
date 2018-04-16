@@ -27,23 +27,23 @@ class LoginPage extends React.Component {
   }
 
   //begin session for user
-  login(info){
-    alert("Login Success Callback")
-  	let user = {"firstName": info.w3.ofa, "lastName": info.w3.wea, "fullName": info.w3.ig, "email": info.w3.U3}
-  	sessionStorage.setItem("isAuth", true);
-  	sessionStorage.setItem("user", JSON.stringify(user))
-  	sessionStorage.setItem("beginSession", true)
-  	this.props.auth()
+  login(info) {
+    alert('Login Success Callback');
+    let user = {'firstName': info.w3.ofa, 'lastName': info.w3.wea, 'fullName': info.w3.ig, 'email': info.w3.U3 };
+    sessionStorage.setItem('isAuth', true);
+    sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('beginSession', true);
+    this.props.auth();
 
-  };
+  }
 
   render() {
-  	console.log("Rendering Login Page")
-    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    console.log('Rendering Login Page');
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
 
     return (
       <div>
-        <p> Please sign in to view:  {from.pathname}</p>
+        <p> Please sign in to view: { from.pathname }</p>
         <div id="my-signin2"></div>
       </div>
     );
