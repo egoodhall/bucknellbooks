@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
 import WelcomeMessage from './WelcomeMessage.js';
-import {Button} from 'material-ui'
+import SearchBar from './SearchBar.js';
+import AppBar from 'material-ui/AppBar';
 
 class SearchPage extends Component {
 
-	constructor(props){
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
-	componentWillMount(){
-	}
+  componentWillMount() {
+  }
 
-	componentWillUpdate(nextProps, nextState){
-	}
+  componentWillUpdate(nextProps, nextState) {
+  }
 
   render() {
-  	console.log("Rendering Search Page")
     return (
-    	<div>
-    		<WelcomeMessage />
-      		<h1>This is the search page!</h1>
-      	</div>
+      <div>
+        <AppBar position="static">
+          <SearchBar
+            onChange={()=>{}}
+            onRequestSearch={()=>{}}
+          />
+        </AppBar>
+        <h1>This is the search page!</h1>
+        <WelcomeMessage />
+      </div>
     );
   }
 }

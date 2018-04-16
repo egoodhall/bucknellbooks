@@ -25,6 +25,7 @@ globals:
     window: false
     document: false
     hashHistory: false
+    sessionStorage: false
 
 rules:
     indent: [2, 2, {SwitchCase: 1}]
