@@ -22,7 +22,7 @@ bookSchema.plugin(
     auth: elasticSearch.auth,
     hydrate: true,
     hydrateOptions: {select: 'title isbn price ownerId sold _id courseNo courseDpt'},
-    filter: (book) => book.sold === false
+    filter: (book) => book.sold === true
   }
 );
 

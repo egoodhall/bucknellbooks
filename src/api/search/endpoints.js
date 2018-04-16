@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const respondData = (req, res) => {
   return (err, data) => {
-      // Log and return error
+    // Log and return error
     if (err) {
       console.log(err.message);
       res.status(500).json(wrap(false, err.message));
@@ -17,6 +17,7 @@ const respondData = (req, res) => {
 };
 
 const search = (req, res) => {
+  console.log('Sending search for:', req.query.text);
   Book.search({
     multi_match: {
       query: req.query.text,
