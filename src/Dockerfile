@@ -10,9 +10,8 @@ COPY yarn.lock ./
 # Copy start script
 COPY ./start.sh ./start.sh
 
-RUN yarn install --production=true
 # If you are building your code for production
-# RUN npm install --only=production
+RUN yarn install --production=true
 
 # Bundle app source
 COPY . .
