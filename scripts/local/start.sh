@@ -45,7 +45,7 @@ else
 fi
 
 # Start frontend and backend watching servers
-docker-compose start db elasticsearch 2>&1 | tee ${logdir}/docker.log | log 'dev-services' 2 &
+# docker-compose start db elasticsearch 2>&1 | tee ${logdir}/docker.log | log 'dev-services' 2 &
 $build_tool dev-server 2>&1 | tee ${logdir}/backend.log | log 'dev-backend ' 4 &
 $build_tool dev-static 2>&1 | tee ${logdir}/frontend.log | log 'dev-frontend' 1
 
