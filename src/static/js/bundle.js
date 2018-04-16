@@ -63155,11 +63155,11 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
-},{"./navigation/Navigation.js":577,"material-ui/styles/MuiThemeProvider":337,"material-ui/styles/baseThemes/lightBaseTheme":338,"material-ui/styles/getMuiTheme":340,"react":560,"react-dom":380,"react-router-dom":520}],574:[function(require,module,exports){
+},{"./navigation/Navigation.js":576,"material-ui/styles/MuiThemeProvider":337,"material-ui/styles/baseThemes/lightBaseTheme":338,"material-ui/styles/getMuiTheme":340,"react":560,"react-dom":380,"react-router-dom":520}],574:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -63167,6 +63167,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _materialUi = require('material-ui');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -63177,82 +63179,76 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /*
+
 Page responsible for logging the user in
 */
 var LoginPage = function (_React$Component) {
-  _inherits(LoginPage, _React$Component);
+    _inherits(LoginPage, _React$Component);
 
-  function LoginPage(props) {
-    _classCallCheck(this, LoginPage);
+    function LoginPage(props) {
+        _classCallCheck(this, LoginPage);
 
-    var _this = _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
-
-    _this.login = _this.login.bind(_this);
-    return _this;
-  }
-
-  _createClass(LoginPage, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.renderButton();
+        return _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
     }
 
-    //render google sign in button
+    _createClass(LoginPage, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.drawsignin();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            this.drawsignin();
+        }
+    }, {
+        key: 'drawsignin',
+        value: function drawsignin() {
+            console.log("Rendering Login Btn");
+            window.gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': this.props.login,
+                'onfailure': function onfailure(error) {
+                    return console.log(error);
+                }
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            console.log("Rendering Login Page");
 
-  }, {
-    key: 'renderButton',
-    value: function renderButton() {
-      window.gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': this.login,
-        'onfailure': console.log('login failed')
-      });
-    }
+            var _ref = this.props.location.state || { from: { pathname: "/" } },
+                from = _ref.from;
 
-    //begin session for user
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    ' Please sign in to view:  ',
+                    from.pathname
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'my-signin2-body' },
+                    _react2.default.createElement('div', { id: 'my-signin2' })
+                )
+            );
+        }
+    }]);
 
-  }, {
-    key: 'login',
-    value: function login(info) {
-      alert("Login Success Callback");
-      var user = { "firstName": info.w3.ofa, "lastName": info.w3.wea, "fullName": info.w3.ig, "email": info.w3.U3 };
-      sessionStorage.setItem("isAuth", true);
-      sessionStorage.setItem("user", JSON.stringify(user));
-      sessionStorage.setItem("beginSession", true);
-      this.props.auth();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      console.log("Rendering Login Page");
-
-      var _ref = this.props.location.state || { from: { pathname: "/" } },
-          from = _ref.from;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'p',
-          null,
-          ' Please sign in to view:  ',
-          from.pathname
-        ),
-        _react2.default.createElement('div', { id: 'my-signin2' })
-      );
-    }
-  }]);
-
-  return LoginPage;
+    return LoginPage;
 }(_react2.default.Component);
 
 exports.default = LoginPage;
 
-},{"react":560}],575:[function(require,module,exports){
+},{"material-ui":318,"react":560}],575:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63264,10 +63260,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _WelcomeMessage = require('./WelcomeMessage.js');
-
-var _WelcomeMessage2 = _interopRequireDefault(_WelcomeMessage);
 
 var _materialUi = require('material-ui');
 
@@ -63289,11 +63281,6 @@ var SearchPage = function (_Component) {
   }
 
   _createClass(SearchPage, [{
-    key: 'signOutClick',
-    value: function signOutClick() {
-      this.props.signOut();
-    }
-  }, {
     key: 'componentWillMount',
     value: function componentWillMount() {}
   }, {
@@ -63302,16 +63289,18 @@ var SearchPage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var user = JSON.parse(sessionStorage.getItem("gUser"));
+      console.log(user);
+      console.log("Rendering Search Page");
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_WelcomeMessage2.default, null),
         _react2.default.createElement(
           'h1',
           null,
           'This is the search page!'
         ),
-        _react2.default.createElement(_materialUi.RaisedButton, { label: 'Sign Out', primary: true, onClick: this.signOutClick.bind(this) })
+        _react2.default.createElement(_materialUi.RaisedButton, { label: 'Sign Out', primary: true, onClick: this.props.logout })
       );
     }
   }]);
@@ -63321,84 +63310,7 @@ var SearchPage = function (_Component) {
 
 exports.default = SearchPage;
 
-},{"./WelcomeMessage.js":576,"material-ui":318,"react":560}],576:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _materialUi = require('material-ui');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// give user a welcome message after initial login
-var WelcomeMessage = function (_Component) {
-	_inherits(WelcomeMessage, _Component);
-
-	function WelcomeMessage(props) {
-		_classCallCheck(this, WelcomeMessage);
-
-		var _this = _possibleConstructorReturn(this, (WelcomeMessage.__proto__ || Object.getPrototypeOf(WelcomeMessage)).call(this, props));
-
-		_this.state = { open: open };
-		return _this;
-	}
-
-	//open welcome message if we are just beginning the session
-
-
-	_createClass(WelcomeMessage, [{
-		key: 'componentWillMount',
-		value: function componentWillMount() {
-			var shouldBeWelcomed = sessionStorage.getItem("beginSession") === 'true';
-			this.setState({ open: shouldBeWelcomed });
-		}
-
-		//close the welcome message
-
-	}, {
-		key: 'handleRequestClose',
-		value: function handleRequestClose() {
-			sessionStorage.setItem("beginSession", false);
-			this.setState({ open: false });
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var user = JSON.parse(sessionStorage.getItem("user"));
-
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(_materialUi.Snackbar, {
-					open: this.state.open,
-					message: "Welcome back, " + user.firstName,
-					autoHideDuration: 4000,
-					onRequestClose: this.handleRequestClose.bind(this)
-				})
-			);
-		}
-	}]);
-
-	return WelcomeMessage;
-}(_react.Component);
-
-exports.default = WelcomeMessage;
-
-},{"material-ui":318,"react":560}],577:[function(require,module,exports){
+},{"material-ui":318,"react":560}],576:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63443,46 +63355,63 @@ var Navigation = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this, props));
 
-    _this.state = { isAuthenticated: false //navigation keeps track of authentication state
-    };return _this;
+    _this.state = { isAuthenticated: sessionStorage.getItem("isAuth") === 'true' //navigation keeps track of authentication state
+
+    };_this.handleLogin = _this.handleLogin.bind(_this);
+    _this.handleLogout = _this.handleLogout.bind(_this);
+    return _this;
   }
 
   _createClass(Navigation, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.authenticate();
+      var _this2 = this;
+
+      //init google gapi auth2 everytime any page loads
+      window.gapi.load('auth2', function () {
+        window.gapi.auth2.init({
+          client_id: '438120227370-65o4j0kmk9mbij1bp3dqvnts9dh4kfrf.apps.googleusercontent.com',
+          fetch_basic_profile: true
+        }).then(function (auth2) {
+          console.log("Initialized Auth2");
+          window.gapi.auth2 = auth2;
+
+          //if google has user signed in but not authenticated in our system force logout
+          if (auth2.isSignedIn.get() && !_this2.state.isAuthenticated) {
+            _this2.handleLogout();
+          }
+        }).catch(function (reason) {
+          console.log("auth2.init failed with: " + reason.error);
+          console.log(reason.details);
+        });
+      });
     }
-
-    /* Check if user is logged in w/ google using session */
-
   }, {
-    key: 'authenticate',
-    value: function authenticate() {
-      var isAuth = sessionStorage.getItem("isAuth");
+    key: 'handleLogin',
+    value: function handleLogin(gUser) {
+      sessionStorage.setItem("isAuth", true);
+      sessionStorage.setItem("gUser", JSON.stringify(gUser.getBasicProfile()));
+      this.setState({ isAuthenticated: true });
 
-      if (isAuth === null) {
-        //if starting new session
-        sessionStorage.setItem("isAuth", false);
-        isAuth = false;
-      }
-      this.setState({ isAuthenticated: isAuth });
+      //token for server side verification (later on)
+      var token = gUser.getAuthResponse().id_token;
+      var body = JSON.stringify({ token: token });
     }
-
-    /* Sign user out of session */
-
   }, {
-    key: 'signOut',
-    value: function signOut() {
-      sessionStorage.setItem("isAuth", false);
-      var authInstance = window.gapi.auth2.getAuthInstance();
-      authInstance.disconnect();
-      authInstance.signOut();
-      this.setState({ isAuthenticated: false });
+    key: 'handleLogout',
+    value: function handleLogout() {
+      var _this3 = this;
+
+      console.log("got signout click");
+      window.gapi.auth2.signOut().then(function () {
+        console.log("signed out!");
+        _this3.setState({ googleUser: null, isAuthenticated: false });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var isAuth = this.state.isAuthenticated;
       return _react2.default.createElement(
@@ -63497,11 +63426,11 @@ var Navigation = function (_React$Component) {
                 to: {
                   pathname: '/',
                   state: { from: routeProps.location }
-                } }) : _react2.default.createElement(_LoginPage2.default, _extends({}, routeProps, { auth: _this2.authenticate.bind(_this2) }));
+                } }) : _react2.default.createElement(_LoginPage2.default, _extends({}, routeProps, { login: _this4.handleLogin }));
             } }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/',
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/',
             render: function render(routeProps) {
-              return isAuth ? _react2.default.createElement(_SearchPage2.default, _extends({}, routeProps, { signOut: _this2.signOut.bind(_this2) })) : _react2.default.createElement(_reactRouterDom.Redirect, {
+              return isAuth ? _react2.default.createElement(_SearchPage2.default, _extends({}, routeProps, { logout: _this4.handleLogout })) : _react2.default.createElement(_reactRouterDom.Redirect, {
                 to: {
                   pathname: '/login',
                   state: { from: routeProps.location }
