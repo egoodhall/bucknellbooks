@@ -63443,8 +63443,8 @@ var Navigation = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this, props));
 
-    _this.state = { isAuthenticated: false //navigation keeps track of authentication state
-    };return _this;
+    _this.state = { isAuthenticated: false }; //navigation keeps track of authentication state
+    return _this;
   }
 
   _createClass(Navigation, [{
@@ -63458,11 +63458,11 @@ var Navigation = function (_React$Component) {
   }, {
     key: 'authenticate',
     value: function authenticate() {
-      var isAuth = sessionStorage.getItem("isAuth");
+      var isAuth = sessionStorage.getItem('isAuth');
 
       if (isAuth === null) {
         //if starting new session
-        sessionStorage.setItem("isAuth", false);
+        sessionStorage.setItem('isAuth', false);
         isAuth = false;
       }
       this.setState({ isAuthenticated: isAuth });
@@ -63473,7 +63473,7 @@ var Navigation = function (_React$Component) {
   }, {
     key: 'signOut',
     value: function signOut() {
-      sessionStorage.setItem("isAuth", false);
+      sessionStorage.setItem('isAuth', false);
       var authInstance = window.gapi.auth2.getAuthInstance();
       authInstance.disconnect();
       authInstance.signOut();

@@ -1,49 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
+import {HashRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
 import SearchPage from '../components/SearchPage';
 import LoginPage from '../components/LoginPage';
 
 
-class Navigation extends React.Component{
-  constructor(props){
+class Navigation extends React.Component {
+  constructor(props) {
     super(props);
 
-    this.state = { isAuthenticated: false } //navigation keeps track of authentication state
+    this.state = { isAuthenticated: false }; //navigation keeps track of authentication state
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.authenticate();
   }
 
   /* Check if user is logged in w/ google using session */
-  authenticate(){
-    let isAuth = sessionStorage.getItem("isAuth");
+  authenticate() {
+    let isAuth = sessionStorage.getItem('isAuth');
 
-    if(isAuth === null){ //if starting new session
-      sessionStorage.setItem("isAuth", false); 
+    if (isAuth === null) { //if starting new session
+      sessionStorage.setItem('isAuth', false);
       isAuth = false;
     }
-    this.setState({isAuthenticated: isAuth})
+    this.setState({isAuthenticated: isAuth});
   }
 
   /* Sign user out of session */
-  signOut(){
-    sessionStorage.setItem("isAuth", false);
-    let authInstance = window.gapi.auth2.getAuthInstance()
+  signOut() {
+    sessionStorage.setItem('isAuth', false);
+    let authInstance = window.gapi.auth2.getAuthInstance();
     authInstance.disconnect();
-    authInstance.signOut()
+    authInstance.signOut();
     this.setState({isAuthenticated: false});
   }
 
 
-  render(){
+  render() {
     let isAuth = this.state.isAuthenticated;
     return (
 
         <Router>
           <div>
-            <Route exact path='/login' 
+            <Route exact path='/login'
                 render={(routeProps) => (isAuth) ? (
                   <Redirect
                     to={{
@@ -69,7 +69,7 @@ class Navigation extends React.Component{
               />
             </div>
         </Router>
-      )
+    );
   }
 }
 
