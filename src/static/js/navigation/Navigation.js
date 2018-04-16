@@ -38,27 +38,26 @@ class Navigation extends React.Component{
     let isAuth = this.state.isAuthenticated;
 
     return (
-
         <Router>
           <div>
-            <Route exact path='/' 
+            <Route exact path='/login' 
                 render={(routeProps) => (isAuth) ? (
                   <Redirect
                     to={{
-                      pathname: '/search',
+                      pathname: '/',
                       state: { from: routeProps.location }
                     }} />
               ) : (
                 <LoginPage {...routeProps} auth={this.authenticate.bind(this)}/>
             )} />
 
-            <Route exact path='/search'
+            <Route exact path='/'
                 render={(routeProps) => isAuth ? (
                     <SearchPage {...routeProps} signOut={this.signOut.bind(this)}/>
                   ) : (
                     <Redirect
                       to={{
-                        pathname: '/',
+                        pathname: '/login',
                         state: { from: routeProps.location }
                       }}
                     />
