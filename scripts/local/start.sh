@@ -14,7 +14,7 @@ pythonLogClr=4
 nodeLogClr=1
 
 # Stop all jobs on ctrl-C
-trap 'kill $(jobs -p) &> /dev/null' SIGINT
+trap 'kill $(jobs -p) &> /dev/null && docker-compose stop && docker-compose prune' SIGINT
 
 pushd $(dirname $0)/../.. &> /dev/null
 
@@ -46,7 +46,8 @@ fi
 
 # Start frontend and backend watching servers
 $build_tool dev-server 2>&1 | tee ${logdir}/backend.log | log 'dev-backend' 4 &
-$build_tool dev-static 2>&1 | tee ${logdir}/frontend.log | log 'dev-frontend' 1
+$build_tool dev-static 2>&1 | tee ${logdir}/frontend.log | log 'dev-frontend' 1 &
+docker-compose start db elasticsearch
 
 popd &> /dev/null
 popd &> /dev/null
