@@ -3972,6 +3972,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+<<<<<<< HEAD
 material-ui-search-bar@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/material-ui-search-bar/-/material-ui-search-bar-0.4.1.tgz#821a81d6942dc92ade9d00103f08a961b93b243f"
@@ -3982,6 +3983,12 @@ material-ui@^1.0.0-beta.41:
   version "1.0.0-beta.41"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.41.tgz#0869bed008caa10003ab20ea726476b560c23160"
   dependencies:
+=======
+material-ui@^1.0.0-beta.41:
+  version "1.0.0-beta.41"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.41.tgz#0869bed008caa10003ab20ea726476b560c23160"
+  dependencies:
+>>>>>>> 6e721a7526c2a682cc7c56e9972033ba9fcf0a86
     "@types/jss" "^9.3.0"
     "@types/react-transition-group" "^2.0.6"
     babel-runtime "^6.26.0"
