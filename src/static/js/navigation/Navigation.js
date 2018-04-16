@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
+import {HashRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
 import SearchPage from '../components/SearchPage';
 import LoginPage from '../components/LoginPage';
 
 
-class Navigation extends React.Component{
-  constructor(props){
+class Navigation extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = { isAuthenticated: (sessionStorage.getItem("isAuth") === 'true')} //navigation keeps track of authentication state
@@ -57,13 +57,13 @@ class Navigation extends React.Component{
       })
   }
 
-  render(){
+  render() {
     let isAuth = this.state.isAuthenticated;
     return (
 
         <Router>
           <div>
-            <Route exact path='/login' 
+            <Route exact path='/login'
                 render={(routeProps) => (isAuth) ? (
                   <Redirect
                     to={{
@@ -89,7 +89,7 @@ class Navigation extends React.Component{
               />
             </div>
         </Router>
-      )
+    );
   }
 }
 

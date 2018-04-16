@@ -3,17 +3,9 @@ import {RaisedButton} from 'material-ui'
 
 class SearchPage extends Component {
 
-	constructor(props){
-		super(props);
-	}
-
-
-
-	componentWillMount(){
-	}
-
-	componentWillUpdate(nextProps, nextState){
-	}
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     let user = JSON.parse(sessionStorage.getItem("gUser"))

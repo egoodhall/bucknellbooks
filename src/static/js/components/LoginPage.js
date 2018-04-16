@@ -43,6 +43,18 @@ class LoginPage extends React.Component {
         </div>
       );
   }
+
+  render() {
+    console.log('Rendering Login Page');
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+
+    return (
+      <div>
+        <p> Please sign in to view: { from.pathname }</p>
+        <div id="my-signin2"></div>
+      </div>
+    );
+  }
 }
 
 export default LoginPage;

@@ -63159,7 +63159,7 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -63183,67 +63183,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 Page responsible for logging the user in
 */
 var LoginPage = function (_React$Component) {
-    _inherits(LoginPage, _React$Component);
+  _inherits(LoginPage, _React$Component);
 
-    function LoginPage(props) {
-        _classCallCheck(this, LoginPage);
+  function LoginPage(props) {
+    _classCallCheck(this, LoginPage);
 
-        return _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
+    return _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
+  }
+
+  _createClass(LoginPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.drawsignin();
     }
-
-    _createClass(LoginPage, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.drawsignin();
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      this.drawsignin();
+    }
+  }, {
+    key: 'drawsignin',
+    value: function drawsignin() {
+      console.log("Rendering Login Btn");
+      window.gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': this.props.login,
+        'onfailure': function onfailure(error) {
+          return console.log(error);
         }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            this.drawsignin();
-        }
-    }, {
-        key: 'drawsignin',
-        value: function drawsignin() {
-            console.log("Rendering Login Btn");
-            window.gapi.signin2.render('my-signin2', {
-                'scope': 'profile email',
-                'width': 240,
-                'height': 50,
-                'longtitle': true,
-                'theme': 'dark',
-                'onsuccess': this.props.login,
-                'onfailure': function onfailure(error) {
-                    return console.log(error);
-                }
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            console.log("Rendering Login Page");
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log("Rendering Login Page");
 
-            var _ref = this.props.location.state || { from: { pathname: "/" } },
-                from = _ref.from;
+      var _ref = this.props.location.state || { from: { pathname: "/" } },
+          from = _ref.from;
 
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    ' Please sign in to view:  ',
-                    from.pathname
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'my-signin2-body' },
-                    _react2.default.createElement('div', { id: 'my-signin2' })
-                )
-            );
-        }
-    }]);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          ' Please sign in to view:  ',
+          from.pathname
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'my-signin2-body' },
+          _react2.default.createElement('div', { id: 'my-signin2' })
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log('Rendering Login Page');
 
-    return LoginPage;
+      var _ref2 = this.props.location.state || { from: { pathname: '/' } },
+          from = _ref2.from;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          ' Please sign in to view: ',
+          from.pathname
+        ),
+        _react2.default.createElement('div', { id: 'my-signin2' })
+      );
+    }
+  }]);
+
+  return LoginPage;
 }(_react2.default.Component);
 
 exports.default = LoginPage;
@@ -63281,12 +63301,6 @@ var SearchPage = function (_Component) {
   }
 
   _createClass(SearchPage, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {}
-  }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps, nextState) {}
-  }, {
     key: 'render',
     value: function render() {
       var user = JSON.parse(sessionStorage.getItem("gUser"));
