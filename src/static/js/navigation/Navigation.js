@@ -40,6 +40,7 @@ class Navigation extends React.Component {
   }
 
   handleLogin(gUser) {
+    console.log(gUser);
     sessionStorage.setItem('isAuth', true);
     sessionStorage.setItem('gUser', JSON.stringify(gUser.getBasicProfile()));
     this.setState({isAuthenticated: true});
