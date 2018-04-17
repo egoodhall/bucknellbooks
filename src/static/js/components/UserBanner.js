@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import * as Typicons from 'react-icons/lib/ti';
+import Paper from 'material-ui/Paper';
 
-const iconStyle = {
-  margin: '4px',
-  color: '#FFFF'
+const styles = {
+  iconStyle: {
+    margin: '4px',
+    color: '#FFFF'
+  },
+  appBar: {
+    zIndex: 3,
+    height: 80,
+    justifyContent: 'center',
+    display: 'flex',
+    background: 'dodgerblue'
+  }
 };
 
 class UserBanner extends Component {
@@ -11,9 +21,7 @@ class UserBanner extends Component {
 
   render() {
     return (
-      <div style={{height: '24px', backgroundColor: 'dodgerblue', width: '100%'}}>
-        <Typicons.TiArrowLeft size={20} style={iconStyle}/>
-      </div>
+      <Paper elevation={4} style={styles.appBar}/>
     );
   }
 }
