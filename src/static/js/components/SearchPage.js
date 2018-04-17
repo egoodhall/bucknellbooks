@@ -20,9 +20,11 @@ const getStyles = (props, state) => ({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: '16px'
   },
   searchBar: {
+    maxWidth: '66em',
     flexGrow: 1,
     float: 'left',
     top: '16px',
