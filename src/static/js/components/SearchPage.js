@@ -44,11 +44,8 @@ class SearchPage extends Component {
       <div>
         <Paper elevation={4} style={styles.appBar}>
           <SearchBar
-<<<<<<< HEAD
             closeIcon={<Typicons.TiDelete color={'#9e9e9e'} size={20}/>}
             searchIcon={<Typicons.TiZoom color={'#9e9e9e'} size={20}/>}
-=======
->>>>>>> Fixes to search bar/search page
             style={styles.searchBar}
             onChange={this.onQueryTextChanged}
             onRequestSearch={()=>{}}
