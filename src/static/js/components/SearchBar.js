@@ -172,12 +172,12 @@ export default class SearchBar extends Component {
 }
 
 SearchBar.defaultProps = {
-  closeIcon: <Typicons.TiDeleteOutline color={'#9e9e9e'} size={20}/>,
+  closeIcon: <Typicons.TiDelete color={'#9e9e9e'} size={20}/>,
   dataSource: [],
   dataSourceConfig: {text: 'text', value: 'value'},
   disabled: false,
   hintText: 'Search',
-  searchIcon: <Typicons.TiZoomOutline color={'#9e9e9e'} size={20}/>,
+  searchIcon: <Typicons.TiZoom color={'#9e9e9e'} size={20}/>,
   spellCheck: false,
   value: ''
 };
