@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {HashRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
 import SearchPage from '../components/SearchPage';
 import LoginPage from '../components/LoginPage';
+import UserPage from '../components/UserPage';
 
 
 class Navigation extends React.Component {
@@ -77,6 +78,19 @@ class Navigation extends React.Component {
             <Route exact path='/'
                 render={(routeProps) => isAuth ? (
                     <SearchPage {...routeProps} logout={this.handleLogout}/>
+                  ) : (
+                    <Redirect
+                      to={{
+                        pathname: '/login',
+                        state: { from: routeProps.location }
+                      }}
+                    />
+                  )
+                }
+              />
+              <Route exact path='/profile'
+                render={(routeProps) => isAuth ? (
+                    <UserPage/>
                   ) : (
                     <Redirect
                       to={{
