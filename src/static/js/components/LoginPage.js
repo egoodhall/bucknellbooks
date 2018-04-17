@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
     return (
         <div style={{marginTop: '150px'}}>
           <Paper elevation={4} style={styles.container}>
-            <h1 style={{marginTop: '4px'}}>Bucknell Books</h1>
+            <h1 style={{marginTop: '4px', marginBottom: '0px'}}>Bucknell Books</h1>
             <img src={'../../imageFiles/bookshelf.svg'} alt={'404: Book not found'}/>
             <div className="my-signin2-body">
               <div id="my-signin2" style={{marginBottom: '8px'}}/>
