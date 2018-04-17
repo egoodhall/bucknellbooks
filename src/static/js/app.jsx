@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './navigation/Navigation.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { createMuiTheme } from 'material-ui/styles';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'light'
-  }
-});
+// Build M-UI theme for app
+// const getTheme = () => {
+// };
 
 class App extends React.Component {
   constructor() {
@@ -17,7 +16,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Navigation />
       </MuiThemeProvider>
     );
@@ -28,3 +27,5 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+
