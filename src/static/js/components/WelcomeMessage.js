@@ -23,7 +23,7 @@ class WelcomeMessage extends Component {
   }
 
   render() {
-    let user = JSON.parse(sessionStorage.getItem('user'));
+    let user = JSON.parse(sessionStorage.getItem('gUser'));
 
     return (
       <div>

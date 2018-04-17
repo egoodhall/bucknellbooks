@@ -60,3 +60,5 @@ typings/
 build/
 bundle.js
 
+.DS_Store
+
