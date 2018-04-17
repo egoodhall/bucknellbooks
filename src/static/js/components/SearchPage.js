@@ -51,11 +51,30 @@ class SearchPage extends Component {
     };
 
     this.onQueryTextChanged = this.onQueryTextChanged.bind(this);
+    this.onRequestedSearch = this.onRequestedSearch.bind(this);
   }
 
   onQueryTextChanged(text) {
     this.setState({
       queryText: text
+    });
+  }
+
+  onRequestedSearch() {
+    fetch(`${window.location.origin}/api/search?text=${this.state.queryText}`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success !== true) {
+        console.log('Error!');
+      } else {
+        console.log(res.data);
+        this.setState({
+          currentSearch: {
+            queryText: this.state.queryText,
+            data: res.data
+          }
+        });
+      }
     });
   }
 
@@ -81,7 +100,7 @@ class SearchPage extends Component {
             searchIcon={<Typicons.TiZoom color={'#9e9e9e'} size={20}/>}
             style={styles.searchBar}
             onChange={this.onQueryTextChanged}
-            onRequestSearch={()=>{}}
+            onRequestSearch={this.onRequestedSearch}
             value={this.state.queryText}
           />
           <RaisedButton style={styles.newButton} secondary={true}>+ Book</RaisedButton>
