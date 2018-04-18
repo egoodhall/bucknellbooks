@@ -8,15 +8,15 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import * as Typicons from 'react-icons/lib/ti';
-import styling from '../styling.js';
 import { withRouter } from 'react-router-dom';
+import BookGrid from './BookGrid';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 const getStyles = (props, state) => ({
   appBar: {
     zIndex: 3,
     height: 80,
-    background: styling.colors.primary,
-    position: 'fixed',
+    background: props.muiTheme.palette.primary1Color,
     width: '100%',
     display: 'flex',
     alignItems: 'center',
@@ -86,14 +86,14 @@ class SearchPage extends Component {
           <IconMenu
             iconButtonElement={
               <IconButton style={styles.avatar}>
-                <Avatar style={styles.avatar} />
+                <Avatar src={JSON.parse(sessionStorage.getItem('gUser')).Paa} style={styles.avatar} />
               </IconButton>
             }
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
             <MenuItem primaryText="My Profile" onClick={() => this.props.history.push('/profile')}/>
-            <MenuItem primaryText="Sign out" onClick={() => console.log('Log Out!')}/>
+            <MenuItem primaryText="Sign out" onClick={this.props.logout}/>
           </IconMenu>
           <SearchBar
             closeIcon={<Typicons.TiDelete color={'#9e9e9e'} size={20}/>}
@@ -102,14 +102,15 @@ class SearchPage extends Component {
             onChange={this.onQueryTextChanged}
             onRequestSearch={this.onRequestedSearch}
             value={this.state.queryText}
+            hintText={'Search by Title, ISBN, Course Number...'}
           />
           <RaisedButton style={styles.newButton} secondary={true}>+ Book</RaisedButton>
         </Paper>
-        <h1>This is the search page!</h1>
+        <BookGrid style={{ marginTop: '96px' }} data={this.state.currentSearch ? this.state.currentSearch.data : []} />
         <WelcomeMessage />
       </div>
     );
   }
 }
 
-export default withRouter(SearchPage);
+export default muiThemeable()(withRouter(SearchPage));
