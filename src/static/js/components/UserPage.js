@@ -12,7 +12,8 @@ const getStyles = (props, state) => ({
     position: 'absolute',
     marginTop: '10px',
     left: '0px',
-    color: '#FFFF'
+    color: '#FFFF',
+    cursor: 'pointer'
   },
   appBar: {
     zIndex: 3,
