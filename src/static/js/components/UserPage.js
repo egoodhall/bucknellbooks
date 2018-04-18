@@ -29,7 +29,8 @@ const getStyles = (props, state) => ({
     justifyContent: 'center',
     textAlign: 'center',
     margin: 'auto',
-    marginTop: '8px'
+    marginTop: '8px',
+    fontFamily: 'Roboto, sans-serif'
   }
 });
 
@@ -51,7 +52,7 @@ class UserPage extends Component {
           <h3 style={{margin: '1px'}}>{user.ig}</h3>
           <h3 style={{margin: '1px'}}>{user.U3}</h3>
         </div>
-        <h2 style={{marginLeft: '4px', marginTop: '16px', marginBottom: '4px'}}>My Books</h2>
+        <h2 style={{marginLeft: '4px', marginTop: '16px', marginBottom: '4px', fontFamily: 'Roboto, sans-serif'}}>My Books</h2>
         <div style={{borderTop: '1px solid', marginLeft: '4px', marginRight: '4px'}}>
           <BookCard/>
         </div>
