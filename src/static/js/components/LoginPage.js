@@ -34,7 +34,6 @@ class LoginPage extends React.Component {
   }
 
   drawsignin() {
-    console.log('Rendering Login Btn');
     window.gapi.signin2.render('my-signin2', {
       'scope': 'profile email',
       'width': 240,
@@ -47,7 +46,6 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    console.log('Rendering Login Page');
     const { from } = this.props.location.state || { from: { pathname: '/' } };
 
     return (

@@ -23,7 +23,7 @@ class WelcomeMessage extends Component {
   }
 
   render() {
-    let user = JSON.parse(localStorage.getItem('gUser'));
+    let user = this.props.gUser;
 
     return (
       <div>

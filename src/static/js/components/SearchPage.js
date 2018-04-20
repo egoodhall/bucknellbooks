@@ -80,13 +80,14 @@ class SearchPage extends Component {
 
   render() {
     const styles = getStyles(this.props, this.state);
+    const photoUrl = this.props.gUser.Paa;
     return (
       <div>
         <Paper zDepth={1} style={styles.appBar}>
           <IconMenu
             iconButtonElement={
               <IconButton style={styles.avatar}>
-                <Avatar src={JSON.parse(localStorage.getItem('gUser')).Paa} style={styles.avatar} />
+                <Avatar src={photoUrl} style={styles.avatar} />
               </IconButton>
             }
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
@@ -107,7 +108,7 @@ class SearchPage extends Component {
           <RaisedButton style={styles.newButton} secondary={true}>+ Book</RaisedButton>
         </Paper>
         <BookGrid style={{ marginTop: '96px' }} data={this.state.currentSearch ? this.state.currentSearch.data : []} />
-        <WelcomeMessage />
+        <WelcomeMessage gUser={this.props.gUser}/>
       </div>
     );
   }
