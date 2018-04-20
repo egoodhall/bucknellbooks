@@ -12,18 +12,18 @@ class WelcomeMessage extends Component {
 
   //open welcome message if we are just beginning the session
   componentWillMount() {
-    let shouldBeWelcomed = (sessionStorage.getItem('beginSession') === 'true');
+    let shouldBeWelcomed = (localStorage.getItem('beginSession') === 'true');
     this.setState({open: shouldBeWelcomed});
   }
 
   //close the welcome message
   handleRequestClose() {
-    sessionStorage.setItem('beginSession', false);
+    localStorage.setItem('beginSession', false);
     this.setState({ open: false });
   }
 
   render() {
-    let user = JSON.parse(sessionStorage.getItem('gUser'));
+    let user = JSON.parse(localStorage.getItem('gUser'));
 
     return (
       <div>

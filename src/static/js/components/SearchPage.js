@@ -86,7 +86,7 @@ class SearchPage extends Component {
           <IconMenu
             iconButtonElement={
               <IconButton style={styles.avatar}>
-                <Avatar src={JSON.parse(sessionStorage.getItem('gUser')).Paa} style={styles.avatar} />
+                <Avatar src={JSON.parse(localStorage.getItem('gUser')).Paa} style={styles.avatar} />
               </IconButton>
             }
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}

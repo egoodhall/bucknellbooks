@@ -14,7 +14,7 @@ pythonLogClr=4
 nodeLogClr=1
 
 # Stop all jobs on ctrl-C
-trap 'kill $(jobs -p) &> /dev/null && docker-compose stop' SIGINT
+trap 'kill $(jobs -p) &> /dev/null' SIGINT
 
 pushd $(dirname $0)/../.. &> /dev/null
 

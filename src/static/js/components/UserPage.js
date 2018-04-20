@@ -33,7 +33,7 @@ const getStyles = (props, state) => ({
   }
 });
 
-const user = JSON.parse(sessionStorage.getItem('gUser'));
+const user = JSON.parse(localStorage.getItem('gUser'));
 console.log(user);
 
 class UserPage extends Component {
