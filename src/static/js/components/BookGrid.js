@@ -1,17 +1,48 @@
 import React, {Component} from 'react';
 import {GridList, Card, CardText, CardMedia, List, ListItem, CardActions, RaisedButton} from 'material-ui';
 import _ from 'lodash';
+import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
+
+const getStyles = (props, state) => ({
+  card: {
+    text: {
+      paddingTop: '0px',
+      paddingBottom: '0px',
+      div: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'baseline'
+      },
+      title: {
+        textAlign: 'center'
+      },
+      price: {
+        textAlign: 'center',
+        color: 'green',
+        fontWeight: 200
+      }
+    }
+  },
+  grid: {
+    marginLeft: '10%',
+    marginRight: '10%',
+    marginTop: 16
+  }
+});
 
 // give user a welcome message after initial login
 class BookGrid extends Component {
 
-  buildGridCards(books) {
+  buildGridCards(books, styles) {
     return _.map(books, (book, idx) => (
-      <Card style={{ margin: 8 }} >
-        <CardText>
-          <h2 style={{textAlign: 'center'}}>{book.title}</h2>
-          <h3 style={{textAlign: 'center', color: 'green'}}>${book.price}</h3>
+      <Card style={styles.card} key={idx}>
+        <CardText style={styles.card.text}>
+          <div style={styles.card.text.div}>
+            <h2 style={styles.card.text.title}>{book.title}</h2>
+            <h1 style={styles.card.text.price}>${book.price}</h1>
+          </div>
         </CardText>
         <CardMedia>
           <List>
@@ -27,12 +58,25 @@ class BookGrid extends Component {
   }
 
   render() {
+    const styles = getStyles(this.props, this.state);
+
+    let cols = 4;
+    const windowSize = this.props.windowWidth;
+
+    if (windowSize < 600) {
+      cols = 1;
+    } else if (windowSize < 800) {
+      cols = 2;
+    } else if (windowSize < 1000) {
+      cols = 3;
+    }
+
     return (
-      <GridList cellHeight={200} cols={4} style={{ marginLeft: '10%', marginRight: '10%', marginTop: 16 }}>
-        {this.buildGridCards(this.props.data)}
+      <GridList cellHeight={'auto'} cols={cols} padding={8} style={styles.grid}>
+        {this.buildGridCards(this.props.data, styles)}
       </GridList>
     );
   }
 }
 
-export default BookGrid;
+export default windowSize(BookGrid);

@@ -11,6 +11,9 @@ import * as Typicons from 'react-icons/lib/ti';
 import { withRouter } from 'react-router-dom';
 import BookGrid from './BookGrid';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import windowSize from 'react-window-size';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 const getStyles = (props, state) => ({
   appBar: {
@@ -39,6 +42,11 @@ const getStyles = (props, state) => ({
   },
   newButton: {
     marginLeft: '24px'
+  },
+  fab: {
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px'
   }
 });
 
@@ -103,15 +111,29 @@ class SearchPage extends Component {
             onChange={this.onQueryTextChanged}
             onRequestSearch={this.onRequestedSearch}
             value={this.state.queryText}
-            hintText={'Search by Title, ISBN, Course Number...'}
+            hintText={'Title, ISBN, Course...'}
           />
-          <RaisedButton style={styles.newButton} secondary={true}>+ Book</RaisedButton>
+          { this.props.windowWidth >= 500 &&
+            <RaisedButton
+              style={styles.newButton}
+              secondary={true}
+              labelColor={this.props.muiTheme.palette.alternateTextColor}>
+              + Book
+            </RaisedButton>
+          }
         </Paper>
         <BookGrid style={{ marginTop: '96px' }} data={this.state.currentSearch ? this.state.currentSearch.data : []} />
+        { this.props.windowWidth < 500 &&
+          <FloatingActionButton
+            secondary={true}
+            style={styles.fab}>
+            <ContentAdd />
+          </FloatingActionButton>
+        }
         <WelcomeMessage gUser={this.props.gUser}/>
       </div>
     );
   }
 }
 
-export default muiThemeable()(withRouter(SearchPage));
+export default windowSize(muiThemeable()(withRouter(SearchPage)));
