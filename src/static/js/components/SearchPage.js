@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WelcomeMessage from './WelcomeMessage.js';
+import AddBookModal from './AddBookModal.js';
 import SearchBar from 'material-ui-search-bar';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -124,6 +125,7 @@ class SearchPage extends Component {
               + Book
             </RaisedButton>
           }
+          <AddBookModal />
         </Paper>
         <BookGrid
           style={{ marginTop: '96px' }}
