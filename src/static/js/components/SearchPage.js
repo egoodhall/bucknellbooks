@@ -8,15 +8,18 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import * as Typicons from 'react-icons/lib/ti';
-import styling from '../styling.js';
 import { withRouter } from 'react-router-dom';
+import BookGrid from './BookGrid';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import windowSize from 'react-window-size';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 const getStyles = (props, state) => ({
   appBar: {
     zIndex: 3,
     height: 80,
-    background: styling.colors.primary,
-    position: 'fixed',
+    background: props.muiTheme.palette.primary1Color,
     width: '100%',
     display: 'flex',
     alignItems: 'center',
@@ -39,6 +42,11 @@ const getStyles = (props, state) => ({
   },
   newButton: {
     marginLeft: '24px'
+  },
+  fab: {
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px'
   }
 });
 
@@ -78,22 +86,27 @@ class SearchPage extends Component {
     });
   }
 
+  createNewBook() {
+    console.log('Create book!');
+  }
+
   render() {
     const styles = getStyles(this.props, this.state);
+    const photoUrl = this.props.gUser.Paa;
     return (
       <div>
         <Paper zDepth={1} style={styles.appBar}>
           <IconMenu
             iconButtonElement={
               <IconButton style={styles.avatar}>
-                <Avatar style={styles.avatar} />
+                <Avatar src={photoUrl} style={styles.avatar} />
               </IconButton>
             }
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
             <MenuItem primaryText="My Profile" onClick={() => this.props.history.push('/profile')}/>
-            <MenuItem primaryText="Sign out" onClick={() => console.log('Log Out!')}/>
+            <MenuItem primaryText="Sign out" onClick={this.props.logout}/>
           </IconMenu>
           <SearchBar
             closeIcon={<Typicons.TiDelete color={'#9e9e9e'} size={20}/>}
@@ -102,14 +115,34 @@ class SearchPage extends Component {
             onChange={this.onQueryTextChanged}
             onRequestSearch={this.onRequestedSearch}
             value={this.state.queryText}
+            hintText={'Title, ISBN, Course...'}
           />
-          <RaisedButton style={styles.newButton} secondary={true}>+ Book</RaisedButton>
+          { this.props.windowWidth >= 500 &&
+            <RaisedButton
+              style={styles.newButton}
+              secondary={true}
+              onClick={this.createNewBook.bind(this)}>
+              + Book
+            </RaisedButton>
+          }
         </Paper>
-        <h1>This is the search page!</h1>
-        <WelcomeMessage />
+        <BookGrid
+          style={{ marginTop: '96px' }}
+
+          data={this.state.currentSearch ? this.state.currentSearch.data : []}
+        />
+        { this.props.windowWidth < 500 &&
+          <FloatingActionButton
+            secondary={true}
+            style={styles.fab}
+            onClick={this.createNewBook.bind(this)}>
+            <ContentAdd />
+          </FloatingActionButton>
+        }
+        <WelcomeMessage gUser={this.props.gUser}/>
       </div>
     );
   }
 }
 
-export default withRouter(SearchPage);
+export default windowSize(muiThemeable()(withRouter(SearchPage)));

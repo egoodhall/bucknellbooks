@@ -34,7 +34,6 @@ class LoginPage extends React.Component {
   }
 
   drawsignin() {
-    console.log('Rendering Login Btn');
     window.gapi.signin2.render('my-signin2', {
       'scope': 'profile email',
       'width': 240,
@@ -47,13 +46,12 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    console.log('Rendering Login Page');
     const { from } = this.props.location.state || { from: { pathname: '/' } };
 
     return (
-        <div style={{marginTop: '150px'}}>
-          <Paper elevation={4} style={styles.container}>
-            <h1 style={{marginTop: '4px', marginBottom: '0px'}}>Bucknell Books</h1>
+        <div style={{marginTop: '10vh'}}>
+          <Paper zDepth={1} style={styles.container}>
+            <h1 style={{marginTop: '4px', marginBottom: '0px', fontWeight: 200, fontSize: '4em'}}>Bucknell Books</h1>
             <img src={'../../imageFiles/bookshelf.svg'} alt={'404: Book not found'}/>
             <div className="my-signin2-body">
               <div id="my-signin2" style={{marginBottom: '8px'}}/>
