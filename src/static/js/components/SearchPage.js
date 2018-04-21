@@ -86,6 +86,10 @@ class SearchPage extends Component {
     });
   }
 
+  createNewBook() {
+    console.log('Create book!');
+  }
+
   render() {
     const styles = getStyles(this.props, this.state);
     const photoUrl = this.props.gUser.Paa;
@@ -117,16 +121,21 @@ class SearchPage extends Component {
             <RaisedButton
               style={styles.newButton}
               secondary={true}
-              labelColor={this.props.muiTheme.palette.alternateTextColor}>
+              onClick={this.createNewBook.bind(this)}>
               + Book
             </RaisedButton>
           }
         </Paper>
-        <BookGrid style={{ marginTop: '96px' }} data={this.state.currentSearch ? this.state.currentSearch.data : []} />
+        <BookGrid
+          style={{ marginTop: '96px' }}
+
+          data={this.state.currentSearch ? this.state.currentSearch.data : []}
+        />
         { this.props.windowWidth < 500 &&
           <FloatingActionButton
             secondary={true}
-            style={styles.fab}>
+            style={styles.fab}
+            onClick={this.createNewBook.bind(this)}>
             <ContentAdd />
           </FloatingActionButton>
         }

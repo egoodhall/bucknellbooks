@@ -3,18 +3,18 @@ import {GridList, Card, CardText, CardMedia, List, ListItem, CardActions, Raised
 import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
+import Dotdotdot from 'react-dotdotdot';
+import Tooltip from 'react-tooltip';
 
 const getStyles = (props, state) => ({
   card: {
     text: {
       paddingTop: '0px',
       paddingBottom: '0px',
-      div: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'baseline'
-      },
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'baseline',
       title: {
         textAlign: 'center'
       },
@@ -29,6 +29,16 @@ const getStyles = (props, state) => ({
     marginLeft: '10%',
     marginRight: '10%',
     marginTop: 16
+  },
+  newcard: {
+    background: '#eee',
+    border: '1.5px dashed #ccc',
+    text: {
+      fontSize: '1.85em',
+      fontWeight: 200,
+      textAlign: 'center',
+      color: '#aaa'
+    }
   }
 });
 
@@ -36,13 +46,20 @@ const getStyles = (props, state) => ({
 class BookGrid extends Component {
 
   buildGridCards(books, styles) {
-    return _.map(books, (book, idx) => (
+    // Build all normal cards
+    const cards = _.map(books, (book, idx) => (
       <Card style={styles.card} key={idx}>
         <CardText style={styles.card.text}>
-          <div style={styles.card.text.div}>
-            <h2 style={styles.card.text.title}>{book.title}</h2>
-            <h1 style={styles.card.text.price}>${book.price}</h1>
+          <div title={book.title}>
+            <Dotdotdot
+              clamp={1}
+              tagName={'h2'}
+              style={styles.card.text.title}
+            >
+              {book.title}
+            </Dotdotdot>
           </div>
+          <h1 style={styles.card.text.price}>${book.price}</h1>
         </CardText>
         <CardMedia>
           <List>
@@ -55,24 +72,45 @@ class BookGrid extends Component {
         </CardActions>
       </Card>
     ));
+
+    // Prepend a "New card" card if onCreate is defined
+    if (this.props.onCreate !== undefined) {
+      cards.unshift(
+        <Card style={styles.newcard} onClick={this.props.onCreate} key={-1}>
+          <CardText>
+            <p style={styles.newcard.text}>&nbsp;</p>
+            <p style={styles.newcard.text}>Add New Book</p>
+            <p style={styles.newcard.text}>&nbsp;</p>
+          </CardText>
+        </Card>
+      );
+    }
+
+    // Return all cards in grid list
+    return cards;
+  }
+
+  showCreate() {
+    console.log(this.props.onCreate !== undefined);
+
   }
 
   render() {
     const styles = getStyles(this.props, this.state);
 
-    let cols = 4;
     const windowSize = this.props.windowWidth;
 
+    let cols = 4;
     if (windowSize < 600) {
       cols = 1;
-    } else if (windowSize < 800) {
+    } else if (windowSize < 900) {
       cols = 2;
-    } else if (windowSize < 1000) {
+    } else if (windowSize < 1100) {
       cols = 3;
     }
 
     return (
-      <GridList cellHeight={'auto'} cols={cols} padding={8} style={styles.grid}>
+      <GridList cellHeight={'auto'} cols={cols} padding={16} style={styles.grid}>
         {this.buildGridCards(this.props.data, styles)}
       </GridList>
     );
