@@ -8,7 +8,7 @@ const bookSchema = new mongoose.Schema({
   title: { type: String, es_indexed: true, es_boost: 2.0 },
   isbn: { type: String, es_indexed: true },
   price: Number,
-  courseDpt: { type: String, es_indexed: true },
+  course: { type: String, es_indexed: true },
   ownerId: Number,
   sold: Boolean
 });
@@ -21,7 +21,7 @@ bookSchema.plugin(
     port: elasticSearch.port,
     auth: elasticSearch.auth,
     hydrate: true,
-    hydrateOptions: {select: 'title isbn price ownerId sold _id courseNo courseDpt'},
+    hydrateOptions: {select: 'title isbn price course ownerId sold _id'},
     filter: (book) => book.sold === true
   }
 );
@@ -29,8 +29,22 @@ bookSchema.plugin(
 // Create the model
 var Book = mongoose.model('Book', bookSchema);
 
-
-const init = new Book({ title: 'init_book', isbn: '', sold: true }).save();
+// Initialize for elasticsearch if running on a clean
+// database
+Book.findOne({ title: 'init_book' }, (err, res) => {
+  if (err || res === null) {
+    console.log('Initializing books in database');
+    new Book({
+      title: 'init_book',
+      isbn: 'fake',
+      sold: true,
+      course: 'CSCI 420',
+      ownerId: -1,
+      price: -1.00
+    }).save();
+    Book.synchronize();
+  }
+});
 
 
 // Synchronize with elasticsearch

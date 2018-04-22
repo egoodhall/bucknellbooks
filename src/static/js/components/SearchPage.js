@@ -128,7 +128,8 @@ class SearchPage extends Component {
         </Paper>
         <BookGrid
           style={{ marginTop: '96px' }}
-
+          onCreate={() => console.log('Click!')}
+          onSelectBook={(book) => console.log(book)}
           data={this.state.currentSearch ? this.state.currentSearch.data : []}
         />
         { this.props.windowWidth < 500 &&

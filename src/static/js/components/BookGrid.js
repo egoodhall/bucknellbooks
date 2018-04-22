@@ -45,9 +45,18 @@ const getStyles = (props, state) => ({
 // give user a welcome message after initial login
 class BookGrid extends Component {
 
-  buildGridCards(books, styles) {
+  getCardActions(book) {
+    if (this.props.onSelectBook !== undefined) {
+      return (<RaisedButton label="Edit" primary={true} onClick={() => this.props.onSelectBook(book)} />);
+    } else {
+      return (<RaisedButton label="Contact Seller" secondary={true}/>);
+    }
+  }
+
+  buildGridCards(styles) {
+
     // Build all normal cards
-    const cards = _.map(books, (book, idx) => (
+    const cards = _.map(this.props.data, (book, idx) => (
       <Card style={styles.card} key={idx}>
         <CardText style={styles.card.text}>
           <div title={book.title}>
@@ -62,13 +71,31 @@ class BookGrid extends Component {
           <h1 style={styles.card.text.price}>${book.price}</h1>
         </CardText>
         <CardMedia>
-          <List>
-            <ListItem primaryText={`ISBN: ${book.isbn}`} leftIcon={<Typicons.TiBookmark color={'#9e9e9e'} size={20}/>}/>
-            <ListItem primaryText={`Course: ${book.courseDpt}`} leftIcon={<Typicons.TiClipboard color={'#9e9e9e'} size={20}/>}/>
-          </List>
+          <div>
+            <List>
+              <ListItem
+                primaryText={book.isbn}
+                leftIcon={
+                  <Typicons.TiBookmark
+                    color={'#9e9e9e'}
+                    size={20}
+                  />
+                }
+              />
+              <ListItem
+                primaryText={book.course}
+                leftIcon={
+                  <Typicons.TiClipboard
+                    color={'#9e9e9e'}
+                    size={20}
+                  />
+                }
+              />
+            </List>
+          </div>
         </CardMedia>
         <CardActions>
-          <RaisedButton label="Contact Seller" secondary={true}/>
+          {this.getCardActions.bind(this)(book)}
         </CardActions>
       </Card>
     ));
@@ -90,11 +117,6 @@ class BookGrid extends Component {
     return cards;
   }
 
-  showCreate() {
-    console.log(this.props.onCreate !== undefined);
-
-  }
-
   render() {
     const styles = getStyles(this.props, this.state);
 
@@ -111,7 +133,7 @@ class BookGrid extends Component {
 
     return (
       <GridList cellHeight={'auto'} cols={cols} padding={16} style={styles.grid}>
-        {this.buildGridCards(this.props.data, styles)}
+        {this.buildGridCards.bind(this)(styles)}
       </GridList>
     );
   }
