@@ -4,7 +4,7 @@ import * as Typicons from 'react-icons/lib/ti';
 import Avatar from 'material-ui/Avatar';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { withRouter } from 'react-router-dom';
-
+import BookGrid from './BookGrid';
 
 const getStyles = (props, state) => ({
   iconStyle: {
@@ -48,8 +48,13 @@ class UserPage extends Component {
           <h3 style={{margin: '1px'}}>{user.ig}</h3>
           <h3 style={{margin: '1px'}}>{user.U3}</h3>
         </div>
-        <h2 style={{marginLeft: '4px', marginTop: '16px', marginBottom: '4px'}}>My Books</h2>
-        <div style={{borderTop: '1px solid', marginLeft: '4px', marginRight: '4px'}}>
+        <h2 style={{marginLeft: '8%', marginTop: '16px', marginBottom: '4px'}}>My Books</h2>
+        <div style={{borderTop: '1px solid', marginLeft: '8%', marginRight: '8%'}}>
+        <BookGrid
+          onCreate={() => console.log('Click!')}
+          onSelectBook={(book) => console.log(book)}
+          data={[]}
+        />
         </div>
       </div>
     );
