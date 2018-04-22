@@ -91,6 +91,7 @@ class SearchPage extends Component {
   }
 
   render() {
+    // console.log(this.props.gUser);
     const styles = getStyles(this.props, this.state);
     const photoUrl = this.props.gUser.Paa;
     return (
@@ -109,8 +110,6 @@ class SearchPage extends Component {
             <MenuItem primaryText="Sign out" onClick={this.props.logout}/>
           </IconMenu>
           <SearchBar
-            closeIcon={<Typicons.TiDelete color={'#9e9e9e'} size={20}/>}
-            searchIcon={<Typicons.TiZoom color={'#9e9e9e'} size={20}/>}
             style={styles.searchBar}
             onChange={this.onQueryTextChanged}
             onRequestSearch={this.onRequestedSearch}

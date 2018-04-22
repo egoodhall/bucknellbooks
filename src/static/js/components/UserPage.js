@@ -5,6 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { withRouter } from 'react-router-dom';
 import BookGrid from './BookGrid';
+import IconButton from 'material-ui/IconButton';
 
 const getStyles = (props, state) => ({
   iconStyle: {
@@ -34,6 +35,33 @@ const getStyles = (props, state) => ({
 
 class UserPage extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: []
+    };
+
+    this.updateBooks = this.updateBooks.bind(this);
+  }
+
+  componentWillMount() {
+    this.updateBooks();
+  }
+
+  updateBooks() {
+    fetch(`${window.location.origin}/api/users/${this.props.gUser.Eea}/books`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success !== true) {
+        console.log('Error!');
+      } else {
+        console.log(res.data);
+        this.setState({
+          books: res.data
+        });
+      }
+    });
+  }
 
   render() {
     const styles = getStyles(this.props, this.state);
@@ -48,14 +76,22 @@ class UserPage extends Component {
           <h3 style={{margin: '1px'}}>{user.ig}</h3>
           <h3 style={{margin: '1px'}}>{user.U3}</h3>
         </div>
-        <h2 style={{marginLeft: '8%', marginTop: '16px', marginBottom: '4px'}}>My Books</h2>
-        <div style={{borderTop: '1px solid', marginLeft: '8%', marginRight: '8%'}}>
+        <div style={{ marginLeft: '8%', marginRight: '8%' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+            <h2 style={{ fontWeight: 300, color: 'grey', margin: 0 }}>My Books</h2>
+            <IconButton style={styles.avatar} color={'grey'} iconStyle={{ color: 'grey', marginLeft: '-8', marginTop: '-8'}} >
+                <Typicons.TiRefresh onClick={this.updateBooks} size={40}/>
+              </IconButton>
+          </div>
+          <div style={{borderTop: '1px solid grey'}}>
+        </div>
         <BookGrid
           onCreate={() => console.log('Click!')}
           onSelectBook={(book) => console.log(book)}
-          data={[]}
+          data={this.state.books || []}
         />
         </div>
+        <div style={{ height: 60 }}/>
       </div>
     );
   }
