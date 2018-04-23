@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import BookGrid from './BookGrid';
 import IconButton from 'material-ui/IconButton';
 import EditBookModal from './EditBookModal';
+import AddBookModal from './AddBookModal';
 
 const getStyles = (props, state) => ({
   iconStyle: {
@@ -41,10 +42,13 @@ class UserPage extends Component {
     this.state = {
       books: [],
       editingBook: {},
-      showEditModal: false
+      showEditModal: false,
+      isAddingBook: false
     };
 
     this.updateBooks = this.updateBooks.bind(this);
+    this.onCloseAddBook = this.onCloseAddBook.bind(this);
+    this.onOpenAddBook = this.onOpenAddBook.bind(this);
   }
 
   componentWillMount() {
@@ -52,6 +56,7 @@ class UserPage extends Component {
   }
 
   updateBooks() {
+    console.log(`${this.props.gUser.Eea}`);
     fetch(`${window.location.origin}/api/users/${this.props.gUser.Eea}/books`)
       .then(res => res.json())
       .then(res => {
@@ -77,6 +82,14 @@ class UserPage extends Component {
     });
   }
 
+  onOpenAddBook() {
+    this.setState({isAddingBook: true});
+  }
+
+  onCloseAddBook() {
+    this.setState({isAddingBook: false});
+  }
+
   render() {
     const styles = getStyles(this.props, this.state);
     const user = this.props.gUser;
@@ -99,15 +112,12 @@ class UserPage extends Component {
           </div>
           <div style={{borderTop: '1px solid grey'}}>
         </div>
-        <BookGrid
-          onCreate={() => console.log('Click!')}
-          onSelectBook={(book) => this.setState({ showEditModal: true, editingBook: book })}
-          data={this.state.books || []}
-        />
-        <EditBookModal
-          open={this.state.showEditModal}
-          book={this.state.editingBook}
-          onRequestClose={this.closeEditModal.bind(this)}/>
+          <BookGrid
+            onCreate={this.onOpenAddBook}
+            onSelectBook={(book) => console.log(book)}
+            data={this.state.books || []}
+          />
+          <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook}/>
         </div>
         <div style={{ height: 60 }}/>
       </div>

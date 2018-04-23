@@ -56,17 +56,28 @@ class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      queryText: ''
+      queryText: '',
+      isAddingBook: false
     };
 
     this.onQueryTextChanged = this.onQueryTextChanged.bind(this);
     this.onRequestedSearch = this.onRequestedSearch.bind(this);
+    this.onOpenAddBook = this.onOpenAddBook.bind(this);
+    this.onCloseAddBook = this.onCloseAddBook.bind(this);
   }
 
   onQueryTextChanged(text) {
     this.setState({
       queryText: text
     });
+  }
+
+  onOpenAddBook() {
+    this.setState({isAddingBook: true});
+  }
+
+  onCloseAddBook() {
+    this.setState({isAddingBook: false});
   }
 
   onRequestedSearch() {
