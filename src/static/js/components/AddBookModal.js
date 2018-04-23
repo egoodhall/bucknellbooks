@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 const styles = {
   modalStyle: {
@@ -22,8 +23,7 @@ class AddBookModal extends Component {
       open: false
     };
 
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.fetchBookData = this.fetchBookData.bind(this);
   }
 
   handleOpen() {
@@ -39,27 +39,33 @@ class AddBookModal extends Component {
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.props.closeModal}
       />,
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.props.closeModal}
       />
     ];
 
     return (
       <div>
-        <RaisedButton style={styles.newButton} secondary={true} onClick={this.handleOpen}>+ Book</RaisedButton>
         <Dialog
-          title="Dialog With Custom Width"
+          title="Add a Book"
           actions={actions}
           modal={true}
           contentStyle={styles.modalStyle}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
+          open={this.props.isOpen}
+          onRequestClose={this.props.closeModal}
         >
-          This dialog spans the entire width of the screen.
+          <TextField
+            floatingLabelText="ISBN"
+            fullWidth={true}
+          /><br />
+          <TextField
+            floatingLabelText="Price"
+            fullWidth={true}
+          />
         </Dialog>
       </div>
     );

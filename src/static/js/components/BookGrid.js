@@ -39,6 +39,7 @@ const getStyles = (props, state) => ({
   newcard: {
     background: '#eee',
     border: '1.5px dashed #ccc',
+    cursor: 'pointer',
     text: {
       fontSize: '1.85em',
       fontWeight: 200,
