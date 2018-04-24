@@ -1,7 +1,5 @@
 import { Book } from '../books';
 import wrap from '../utils/wrapper';
-import soundex from 'soundex';
-import _ from 'lodash';
 
 const respondData = (req, res) => {
   return (err, data) => {
@@ -11,6 +9,7 @@ const respondData = (req, res) => {
       res.status(500).json(wrap(false, err.message));
       return;
     }
+    console.log(data);
     // Return data
     res.json(wrap(true, data.hits.hits));
   };

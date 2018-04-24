@@ -48,7 +48,7 @@ class AddBookModal extends Component {
       isbn: '',
       course: '',
       price: 0,
-      ownerId: this.props.gUser.Eea,
+      ownerId: this.props.gUser.U3,
       sold: false
     };
     this.add = this.add.bind(this);
@@ -70,7 +70,7 @@ class AddBookModal extends Component {
       isbn: '',
       course: '',
       price: 0,
-      ownerId: this.props.gUser.Eea,
+      ownerId: this.props.gUser.U3,
       sold: false});
   }
 
