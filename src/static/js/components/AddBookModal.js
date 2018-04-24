@@ -23,7 +23,6 @@ class AddBookModal extends Component {
       open: false
     };
 
-    this.fetchBookData = this.fetchBookData.bind(this);
   }
 
   handleOpen() {
