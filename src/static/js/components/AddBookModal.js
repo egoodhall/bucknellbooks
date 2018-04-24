@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
-import CurrencyField from 'react-materialui-currency';
+import CurrencyInput from 'react-currency-input';
 
 const styles = {
   modalStyle: {
@@ -121,19 +121,19 @@ class AddBookModal extends Component {
               value={this.state.course || ''}
               onChange={(event) => this.setState({course: event.target.value})}
             />
-            <CurrencyField style={styles.input.field}
+            <TextField
+              style={styles.input.field}
               floatingLabelText={'Price'}
-              precision={2}
-              separator='.'
-              delimiter=','
-              unit='$'
-              value={this.state.price * 100}
-              onChange={(raw, display) => {
-                console.log(raw, display);
-                this.setState({price: raw});
-              }
-              }
-            />
+              floatingLabelFixed={true}
+            >
+              <CurrencyInput
+                allowEmpty={false}
+                allowNegative={false}
+                prefix={'$'}
+                value={this.state.price || ''}
+                onChange={(value) => this.setState({ price: parseFloat(value.slice(1)) || 0.00 })}
+              />
+            </TextField>
             <p/>
           </div>
         </div>
