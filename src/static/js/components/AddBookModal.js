@@ -19,18 +19,6 @@ const styles = {
 class AddBookModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false
-    };
-
-  }
-
-  handleOpen() {
-    this.setState({open: true});
-  }
-
-  handleClose() {
-    this.setState({open: false});
   }
 
   render() {

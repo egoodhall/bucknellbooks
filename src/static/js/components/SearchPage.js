@@ -132,11 +132,11 @@ class SearchPage extends Component {
             <RaisedButton
               style={styles.newButton}
               secondary={true}
-              onClick={this.createNewBook.bind(this)}>
+              onClick={this.onOpenAddBook}>
               + Book
             </RaisedButton>
           }
-          <AddBookModal />
+          <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook}/>
         </Paper>
         <BookGrid
           style={{ marginTop: '96px' }}
