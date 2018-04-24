@@ -4,7 +4,6 @@ import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
 import Dotdotdot from 'react-dotdotdot';
-import Contact from './Contact';
 
 const getStyles = (props, state) => ({
   card: {
@@ -27,7 +26,8 @@ const getStyles = (props, state) => ({
       price: {
         textAlign: 'center',
         color: 'green',
-        fontWeight: 200
+        fontWeight: 200,
+        margin: 0
       }
     }
   },
@@ -40,6 +40,7 @@ const getStyles = (props, state) => ({
     background: '#eee',
     border: '1.5px dashed #ccc',
     cursor: 'pointer',
+    height: 304,
     text: {
       fontSize: '1.85em',
       fontWeight: 200,
@@ -56,16 +57,8 @@ class BookGrid extends Component {
     super(props);
 
     this.state = {
-      isContactOpen: false
+
     };
-  }
-
-  contact() {
-    this.setState({isContactOpen: true});
-  }
-
-  closeContact() {
-    this.setState({isContactOpen: false});
   }
 
   getChip(book) {
@@ -90,7 +83,7 @@ class BookGrid extends Component {
         </IconButton>
       ]);
     } else {
-      return (<RaisedButton label="Contact Seller" secondary={true} onClick={this.contact.bind(this)}/>);
+      return (<RaisedButton label="Contact Seller" secondary={true} onClick={() => this.props.contact(book)}/>);
     }
   }
 
@@ -99,7 +92,11 @@ class BookGrid extends Component {
     // Build all normal cards
     const cards = _.map(this.props.data, (book, idx) => (
       <Card style={styles.card} key={idx}>
-        <CardText style={styles.card.text}>
+        <CardText>
+          <div style={styles.card.text}>
+          {this.props.onSelectBook && this.getChip.bind(this)(book)}
+          <h1 style={styles.card.text.price}>${book.price}</h1>
+          </div>
           <div title={book.title}>
             <Dotdotdot
               clamp={1}
@@ -109,7 +106,6 @@ class BookGrid extends Component {
               {book.title}
             </Dotdotdot>
           </div>
-          <h1 style={styles.card.text.price}>${book.price}</h1>
         </CardText>
         <CardMedia>
           <div>
@@ -174,7 +170,6 @@ class BookGrid extends Component {
 
     return (
       <div>
-        <Contact open={this.state.isContactOpen} onRequestClose={this.closeContact.bind(this)}/>
         <GridList cellHeight={'auto'} cols={cols} padding={16} style={styles.grid}>
           {this.buildGridCards.bind(this)(styles)}
         </GridList>

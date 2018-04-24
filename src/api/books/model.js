@@ -9,7 +9,7 @@ const bookSchema = new mongoose.Schema({
   isbn: { type: String, es_indexed: true },
   price: Number,
   course: { type: String, es_indexed: true },
-  ownerId: Number,
+  ownerId: String,
   sold: Boolean
 });
 

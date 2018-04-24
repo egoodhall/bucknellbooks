@@ -88,7 +88,11 @@ class Contact extends React.Component {
     } else {
       fetch(`${window.location.origin}/api/contact`, {
         method: 'POST',
-        body: JSON.stringify(this.state),
+        body: JSON.stringify({
+          sender: this.props.gUser.U3,
+          recipient: this.props.recipient,
+          msg: this.state.contact.msg
+        }),
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
@@ -101,7 +105,7 @@ class Contact extends React.Component {
             () => this.setState({email: '', msg: '', err: ''}, this.props.onRequestClose)
           );
         } else {
-          this.showSnackbar('Message failed to send:');
+          this.showSnackbar('Message failed to send');
         }
       });
     }
@@ -114,6 +118,7 @@ class Contact extends React.Component {
     return (
       <div>
         <Dialog
+          title={`Contact ${this.props.recipient}`}
           open={this.props.open}
           onRequestClose={this.props.onRequestClose}
           actions={[
@@ -129,33 +134,19 @@ class Contact extends React.Component {
               label={'Send'}
               secondary={true}
               style={styles.action}
-              onClick={() => console.log('Send')}
+              onClick={this.handleContactSend.bind(this)}
             />
           ]}
         >
-        <div style={styles.feedback.form}>
-              <TextField
-                onChange={(event, text) => this.setState({email: event.target.value})}
-                value={this.state.contact.email}
-                floatingLabelText="Email Address"
-              />
-              <IconButton
-                tooltipPosition='bottom-center'
-                tooltip='Enter email to hear back'
-                iconStyle={{ width: 16, height: 16, color: '#bbb'}}
-              >
-                <ActionHelp />
-              </IconButton>
-            </div>
-            <TextField
-              onChange={(event, text) => this.setState({msg: event.target.value})}
-              value={this.state.contact.msg}
-              style={styles.feedback.message}
-              floatingLabelText="Enter your message"
-              errorText={this.state.contact.err}
-              multiLine={true}
-              rows={4}
-            />
+        <TextField
+          onChange={(event, text) => this.setState({ contact: { ...this.state.contact, msg: event.target.value } })}
+          value={this.state.contact.msg}
+          style={styles.feedback.message}
+          floatingLabelText="Enter your message"
+          errorText={this.state.contact.err}
+          multiLine={true}
+          rows={4}
+        />
 
         </Dialog>
         <Snackbar
@@ -163,7 +154,7 @@ class Contact extends React.Component {
         message={this.state.snackbar.msg}
         autoHideDuration={3000}
         action="OK"
-        onRequestClose={this.hideSnackbar}
+        onRequestClose={this.hideSnackbar.bind(this)}
         />
       </div>
 

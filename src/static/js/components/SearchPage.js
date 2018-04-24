@@ -15,6 +15,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import windowSize from 'react-window-size';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Contact from './Contact';
 
 const getStyles = (props, state) => ({
   appBar: {
@@ -57,13 +58,28 @@ class SearchPage extends Component {
     super(props);
     this.state = {
       queryText: '',
-      isAddingBook: false
+      isAddingBook: false,
+      isContactOpen: false
     };
 
     this.onQueryTextChanged = this.onQueryTextChanged.bind(this);
     this.onRequestedSearch = this.onRequestedSearch.bind(this);
     this.onOpenAddBook = this.onOpenAddBook.bind(this);
     this.onCloseAddBook = this.onCloseAddBook.bind(this);
+  }
+
+  contact(book) {
+    this.setState({
+      isContactOpen: true,
+      recipient: book.ownerId
+    });
+  }
+
+  closeContact() {
+    this.setState({
+      isContactOpen: false,
+      recipient: undefined
+    });
   }
 
   onQueryTextChanged(text) {
@@ -82,20 +98,20 @@ class SearchPage extends Component {
 
   onRequestedSearch() {
     fetch(`${window.location.origin}/api/search?text=${this.state.queryText}`)
-    .then(res => res.json())
-    .then(res => {
-      if (res.success !== true) {
-        console.log('Error!');
-      } else {
-        console.log(res.data);
-        this.setState({
-          currentSearch: {
-            queryText: this.state.queryText,
-            data: res.data
-          }
-        });
-      }
-    });
+      .then(res => res.json())
+      .then(res => {
+        if (res.success !== true) {
+          console.log('Error!');
+        } else {
+          console.log(res.data);
+          this.setState({
+            currentSearch: {
+              queryText: this.state.queryText,
+              data: res.data
+            }
+          });
+        }
+      });
   }
 
   createNewBook() {
@@ -137,10 +153,17 @@ class SearchPage extends Component {
             </RaisedButton>
           }
           <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
+          <Contact
+            open={this.state.isContactOpen}
+            onRequestClose={this.closeContact.bind(this)}
+            gUser={this.props.gUser}
+            recipient={this.state.recipient || ''}
+          />
         </Paper>
         <BookGrid
           style={{ marginTop: '96px' }}
           data={this.state.currentSearch ? this.state.currentSearch.data : []}
+          contact={(book) => this.contact.bind(this)(book)}
         />
         { this.props.windowWidth < 500 &&
           <FloatingActionButton

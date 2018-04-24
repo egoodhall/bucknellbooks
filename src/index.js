@@ -7,6 +7,7 @@ import cfg from './cfg';
 import { UserEndpoints } from './api/users';
 import { BookEndpoints } from './api/books';
 import { SearchEndpoints } from './api/search';
+import { sendMessage } from './api/contact';
 
 const port = 8080;
 
@@ -55,6 +56,8 @@ userRouter.post('/:uid/books', BookEndpoints.postItem); // Create a textbook for
 
 // Health Test
 apiRouter.get('/ping', (req, res) => res.send('pong')); // Ping Pong
+
+apiRouter.post('/contact', sendMessage);
 
 // Error handling (log it and return a 500 error)
 app.use((err, req, res, next) => {

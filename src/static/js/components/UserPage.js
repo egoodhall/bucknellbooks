@@ -56,7 +56,7 @@ class UserPage extends Component {
   }
 
   updateBooks() {
-    fetch(`${window.location.origin}/api/users/${this.props.gUser.Eea}/books`)
+    fetch(`${window.location.origin}/api/users/${this.props.gUser.U3}/books`)
       .then(res => res.json())
       .then(res => {
         if (res.success !== true) {
@@ -127,18 +127,19 @@ class UserPage extends Component {
           </div>
           <div style={{borderTop: '1px solid grey'}}>
         </div>
-          <BookGrid
-            onDelete={this.deleteBook.bind(this)}
-            onCreate={this.onOpenAddBook}
-            onSelectBook={(book) => this.setState({ showEditModal: true, editingBook: book })}
-            data={this.state.books || []}
-          />
+
           <EditBookModal
             open={this.state.showEditModal}
             book={this.state.editingBook}
             onRequestClose={this.closeEditModal.bind(this)}/>
           <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
         </div>
+        <BookGrid
+            onDelete={this.deleteBook.bind(this)}
+            onCreate={this.onOpenAddBook}
+            onSelectBook={(book) => this.setState({ showEditModal: true, editingBook: book })}
+            data={this.state.books || []}
+          />
         <div style={{ height: 60 }}/>
       </div>
     );
