@@ -4,7 +4,7 @@ import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
 import Dotdotdot from 'react-dotdotdot';
-import Tooltip from 'react-tooltip';
+import Contact from './Contact';
 
 const getStyles = (props, state) => ({
   card: {
@@ -52,6 +52,22 @@ const getStyles = (props, state) => ({
 // give user a welcome message after initial login
 class BookGrid extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isContactOpen: false
+    };
+  }
+
+  contact() {
+    this.setState({isContactOpen: true});
+  }
+
+  closeContact() {
+    this.setState({isContactOpen: false});
+  }
+
   getCardActions(book) {
     if (this.props.onSelectBook !== undefined) {
       const chip = book.sold
@@ -62,7 +78,7 @@ class BookGrid extends Component {
         <div key={'sold'}><Chip backgroundColor={chip.bg} labelColor={chip.fg}>{chip.text}</Chip></div>
       ]);
     } else {
-      return (<RaisedButton label="Contact Seller" secondary={true}/>);
+      return (<RaisedButton label="Contact Seller" secondary={true} onClick={this.contact.bind(this)}/>);
     }
   }
 
@@ -145,9 +161,12 @@ class BookGrid extends Component {
     }
 
     return (
-      <GridList cellHeight={'auto'} cols={cols} padding={16} style={styles.grid}>
-        {this.buildGridCards.bind(this)(styles)}
-      </GridList>
+      <div>
+        <Contact open={this.state.isContactOpen} onRequestClose={this.closeContact.bind(this)}/>
+        <GridList cellHeight={'auto'} cols={cols} padding={16} style={styles.grid}>
+          {this.buildGridCards.bind(this)(styles)}
+        </GridList>
+      </div>
     );
   }
 }
