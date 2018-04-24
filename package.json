@@ -47,6 +47,7 @@
     "react-icons": "^2.2.7",
     "react-image-gallery": "^0.7.12",
     "react-lazyload": "^2.2.4",
+    "react-materialui-currency": "git+https://github.com/helderfarias/react-materialui-currency.git",
     "react-onscroll": "^1.0.1",
     "react-redux": "^5.0.2",
     "react-render-html": "^0.6.0",

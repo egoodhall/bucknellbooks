@@ -6,6 +6,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { withRouter } from 'react-router-dom';
 import BookGrid from './BookGrid';
 import IconButton from 'material-ui/IconButton';
+import EditBookModal from './EditBookModal';
 
 const getStyles = (props, state) => ({
   iconStyle: {
@@ -38,7 +39,9 @@ class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      editingBook: {},
+      showEditModal: false
     };
 
     this.updateBooks = this.updateBooks.bind(this);
@@ -50,15 +53,26 @@ class UserPage extends Component {
 
   updateBooks() {
     fetch(`${window.location.origin}/api/users/${this.props.gUser.Eea}/books`)
-    .then(res => res.json())
-    .then(res => {
-      if (res.success !== true) {
-        console.log('Error!');
-      } else {
-        console.log(res.data);
-        this.setState({
-          books: res.data
-        });
+      .then(res => res.json())
+      .then(res => {
+        if (res.success !== true) {
+          console.log('Error!');
+        } else {
+          console.log(res.data);
+          this.setState({
+            books: res.data
+          });
+        }
+      });
+  }
+
+  closeEditModal(refresh = false) {
+    this.setState({
+      showEditModal: false,
+      editingBook: {}
+    }, () => {
+      if (refresh) {
+        this.updateBooks();
       }
     });
   }
@@ -79,7 +93,7 @@ class UserPage extends Component {
         <div style={{ marginLeft: '8%', marginRight: '8%' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <h2 style={{ fontWeight: 300, color: 'grey', margin: 0 }}>My Books</h2>
-            <IconButton style={styles.avatar} color={'grey'} iconStyle={{ color: 'grey', marginLeft: '-8', marginTop: '-8'}} >
+            <IconButton style={styles.avatar} color={'grey'} iconStyle={{ color: 'grey', marginLeft: '-8px', marginTop: '-8px'}} >
                 <Typicons.TiRefresh onClick={this.updateBooks} size={40}/>
               </IconButton>
           </div>
@@ -87,9 +101,13 @@ class UserPage extends Component {
         </div>
         <BookGrid
           onCreate={() => console.log('Click!')}
-          onSelectBook={(book) => console.log(book)}
+          onSelectBook={(book) => this.setState({ showEditModal: true, editingBook: book })}
           data={this.state.books || []}
         />
+        <EditBookModal
+          open={this.state.showEditModal}
+          book={this.state.editingBook}
+          onRequestClose={this.closeEditModal.bind(this)}/>
         </div>
         <div style={{ height: 60 }}/>
       </div>

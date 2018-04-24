@@ -4874,6 +4874,10 @@ react-lazyload@^2.2.4:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-lazyload/-/react-lazyload-2.3.0.tgz#ccb134223012447074a96543954f44b055dc6185"
 
+"react-materialui-currency@git+https://github.com/helderfarias/react-materialui-currency.git":
+  version "1.0.0"
+  resolved "git+https://github.com/helderfarias/react-materialui-currency.git#221d50b1b91db314ec300e02ba1388999de80904"
+
 react-onscroll@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-onscroll/-/react-onscroll-1.0.4.tgz#f51e0aa305e393de21d19aa1a6d3769e25fb8870"

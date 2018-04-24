@@ -40,9 +40,7 @@ const postItem = (req, res) => {
 };
 
 const putItem = (req, res) => {
-  if (req.body.title) {
-    req.body.soundex = _(req.body.title).split(' ').map(str => soundex(str)).join(' ');
-  }
+  console.log(req.params, req.body);
   Book.update({ _id: req.params.id }, req.body, respondData(req, res));
 };
 

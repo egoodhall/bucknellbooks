@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {GridList, Card, CardText, CardMedia, List, ListItem, CardActions, RaisedButton} from 'material-ui';
+import {Chip, GridList, Card, CardText, CardMedia, List, ListItem, CardActions, RaisedButton} from 'material-ui';
 import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
@@ -8,6 +8,12 @@ import Tooltip from 'react-tooltip';
 
 const getStyles = (props, state) => ({
   card: {
+    actions: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
     text: {
       paddingTop: '0px',
       paddingBottom: '0px',
@@ -47,7 +53,13 @@ class BookGrid extends Component {
 
   getCardActions(book) {
     if (this.props.onSelectBook !== undefined) {
-      return (<RaisedButton label="Edit" primary={true} onClick={() => this.props.onSelectBook(book)} />);
+      const chip = book.sold
+        ? { text: 'Sold', bg: '#7cb342', fg: '#fff' }
+        : { text: 'Not Sold', bg: '#f44336', fg: '#fff' };
+      return ([
+        <RaisedButton key={'edit'} label="Edit" primary={true} onClick={() => this.props.onSelectBook(book)} />,
+        <div key={'sold'}><Chip backgroundColor={chip.bg} labelColor={chip.fg}>{chip.text}</Chip></div>
+      ]);
     } else {
       return (<RaisedButton label="Contact Seller" secondary={true}/>);
     }
@@ -94,7 +106,7 @@ class BookGrid extends Component {
             </List>
           </div>
         </CardMedia>
-        <CardActions>
+        <CardActions style={styles.card.actions}>
           {this.getCardActions.bind(this)(book)}
         </CardActions>
       </Card>
