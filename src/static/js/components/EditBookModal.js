@@ -132,6 +132,7 @@ class EditBookModal extends React.Component {
             <TextField
               style={styles.input.field}
               floatingLabelText={'Price'}
+              floatingLabelFixed={true}
             >
               <CurrencyInput
                 allowEmpty={false}

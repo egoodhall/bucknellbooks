@@ -80,6 +80,7 @@ class BookGrid extends Component {
       return ([
         <RaisedButton key={'edit'} label="Edit" primary={true} onClick={() => this.props.onSelectBook(book)} />,
         <IconButton
+          key={'delete'}
           onClick={() => this.props.onDelete(book)}
           iconStyle={{ color: '#f44336', marginLeft: '-2px', marginTop: '-2px'}}
         >
