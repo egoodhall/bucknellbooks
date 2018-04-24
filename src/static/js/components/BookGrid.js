@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Chip, GridList, Card, CardText, CardMedia, List, ListItem, CardActions, RaisedButton} from 'material-ui';
+import {Chip, GridList, Card, CardText, CardMedia, IconButton, List, ListItem, CardActions, RaisedButton} from 'material-ui';
 import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
@@ -68,14 +68,25 @@ class BookGrid extends Component {
     this.setState({isContactOpen: false});
   }
 
-  getCardActions(book) {
-    if (this.props.onSelectBook !== undefined) {
-      const chip = book.sold
+  getChip(book) {
+    const chip = book.sold
         ? { text: 'Sold', bg: '#7cb342', fg: '#fff' }
         : { text: 'Not Sold', bg: '#f44336', fg: '#fff' };
+    return (<div key={'sold'}><Chip backgroundColor={chip.bg} labelColor={chip.fg}>{chip.text}</Chip></div>);
+  }
+
+  getCardActions(book) {
+    if (this.props.onSelectBook !== undefined) {
       return ([
         <RaisedButton key={'edit'} label="Edit" primary={true} onClick={() => this.props.onSelectBook(book)} />,
-        <div key={'sold'}><Chip backgroundColor={chip.bg} labelColor={chip.fg}>{chip.text}</Chip></div>
+        <IconButton
+          onClick={() => this.props.onDelete(book)}
+          iconStyle={{ color: '#f44336', marginLeft: '-2px', marginTop: '-2px'}}
+        >
+          <Typicons.TiTrash
+            size={30}
+          />
+        </IconButton>
       ]);
     } else {
       return (<RaisedButton label="Contact Seller" secondary={true} onClick={this.contact.bind(this)}/>);

@@ -56,7 +56,6 @@ class UserPage extends Component {
   }
 
   updateBooks() {
-    console.log(`${this.props.gUser.Eea}`);
     fetch(`${window.location.origin}/api/users/${this.props.gUser.Eea}/books`)
       .then(res => res.json())
       .then(res => {
@@ -67,6 +66,22 @@ class UserPage extends Component {
           this.setState({
             books: res.data
           });
+        }
+      });
+  }
+
+  deleteBook(book) {
+    fetch(`${window.location.origin}/api/books/${book._id}`,
+      {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success !== true) {
+          console.log('Error!');
+        } else {
+          console.log(res.data);
+          this.updateBooks();
         }
       });
   }
@@ -113,10 +128,15 @@ class UserPage extends Component {
           <div style={{borderTop: '1px solid grey'}}>
         </div>
           <BookGrid
+            onDelete={this.deleteBook.bind(this)}
             onCreate={this.onOpenAddBook}
-            onSelectBook={(book) => console.log(book)}
+            onSelectBook={(book) => this.setState({ showEditModal: true, editingBook: book })}
             data={this.state.books || []}
           />
+          <EditBookModal
+            open={this.state.showEditModal}
+            book={this.state.editingBook}
+            onRequestClose={this.closeEditModal.bind(this)}/>
           <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
         </div>
         <div style={{ height: 60 }}/>

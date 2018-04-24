@@ -3,9 +3,9 @@ import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import windowSize from 'react-window-size';
-import CurrencyField from 'react-materialui-currency';
+import CurrencyInput from 'react-currency-input';
 
 const getStyles = (props, state) => ({
 
@@ -53,7 +53,6 @@ class EditBookModal extends React.Component {
   }
 
   updatePrice(displayedVal) {
-    displayedVal.match(/\$(0-9)/);
 
     this.setState({ book });
   }
@@ -94,14 +93,13 @@ class EditBookModal extends React.Component {
         open={this.props.open}
         onRequestClose={this.props.onRequestClose}
         actions={[
-          <RaisedButton
-            key={'discard'}
-            label={'Discard'}
-            primary={true}
+          <FlatButton
+            key={'cancel'}
+            label={'Cancel'}
             style={styles.action}
             onClick={this.discard.bind(this)}
           />,
-          <RaisedButton
+          <FlatButton
             key={'save'}
             label={'Save'}
             secondary={true}
@@ -131,19 +129,20 @@ class EditBookModal extends React.Component {
               value={this.state.book.course || ''}
               onChange={(event) => this.setState({ book: { ...this.state.book, course: event.target.value } })}
             />
-            <CurrencyField style={styles.input.field}
+            <TextField
+              style={styles.input.field}
               floatingLabelText={'Price'}
-              precision={2}
-              separator='.'
-              delimiter=','
-              unit='$'
-              value={this.state.book.price * 100}
-              onChange={(raw, display) => {
-                console.log(raw, display);
-                this.setState({ book: { ...this.state.book, price: raw } });
-              }
-              }
-            />
+            >
+              <CurrencyInput
+                allowEmpty={false}
+                allowNegative={false}
+                prefix={'$'}
+                value={this.state.book.price || ''}
+                onChange={(value) => {
+                  this.setState({ book: { ...this.state.book, price: parseFloat(value.slice(1)) || 0.00 } });
+                }}
+              />
+            </TextField>
             <Toggle
               label={'Sold'}
               toggled={this.state.book.sold || false}
