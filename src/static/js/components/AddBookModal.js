@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import CurrencyField from 'react-materialui-currency';
 
 const styles = {
   modalStyle: {
@@ -11,6 +11,30 @@ const styles = {
   },
   newButton: {
     marginLeft: '24px'
+  },
+  container: {
+    outer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    inner: {
+      width: '100%',
+      maxWidth: '30em',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  },
+  input: {
+    field: {
+      width: '100%'
+    }
+  },
+  action: {
+    margin: '4px'
   }
 
 };
@@ -19,40 +43,100 @@ const styles = {
 class AddBookModal extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      title: '',
+      isbn: '',
+      course: '',
+      price: 0,
+      ownerId: this.props.gUser.Eea,
+      sold: false
+    };
+    this.add = this.add.bind(this);
+  }
+  add() {
+    fetch(`${window.location.origin}/api/users/${this.state.ownerId}/books`,
+      { method: 'POST', body: JSON.stringify(this.state), headers: {'Content-Type': 'application/json'} })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success === true) {
+          console.log('POSTED book successfully');
+        } else {
+          console.log('Error!');
+        }
+      });
+    this.props.closeModal();
+    this.setState({
+      title: '',
+      isbn: '',
+      course: '',
+      price: 0,
+      ownerId: this.props.gUser.Eea,
+      sold: false});
   }
 
   render() {
     const actions = [
-      <FlatButton
-        label="Cancel"
+      <RaisedButton
+        key={'cancel'}
+        label={'cancel'}
         primary={true}
+        style={styles.action}
         onClick={this.props.closeModal}
       />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onClick={this.props.closeModal}
+      <RaisedButton
+        key={'add'}
+        label={'add'}
+        secondary={true}
+        style={styles.action}
+        onClick={this.add}
       />
     ];
 
     return (
       <div>
         <Dialog
-          title="Add a Book"
           actions={actions}
           modal={true}
-          contentStyle={styles.modalStyle}
           open={this.props.isOpen}
           onRequestClose={this.props.closeModal}
         >
-          <TextField
-            floatingLabelText="ISBN"
-            fullWidth={true}
-          /><br />
-          <TextField
-            floatingLabelText="Price"
-            fullWidth={true}
-          />
+        <div style={styles.container.outer}>
+          <div style={styles.container.inner}>
+            <h2>Add Textbook</h2>
+            <TextField
+              style={styles.input.field}
+              floatingLabelText={'Title'}
+              value={this.state.title || ''}
+              onChange={(event) => this.setState({title: event.target.value})}
+            />
+            <TextField
+              style={styles.input.field}
+              floatingLabelText={'ISBN'}
+              value={this.state.isbn || ''}
+              onChange={(event) => this.setState({isbn: event.target.value})}
+            />
+            <TextField
+              style={styles.input.field}
+              floatingLabelText={'Class'}
+              value={this.state.course || ''}
+              onChange={(event) => this.setState({course: event.target.value})}
+            />
+            <CurrencyField style={styles.input.field}
+              floatingLabelText={'Price'}
+              precision={2}
+              separator='.'
+              delimiter=','
+              unit='$'
+              value={this.state.price * 100}
+              onChange={(raw, display) => {
+                console.log(raw, display);
+                this.setState({price: raw});
+              }
+              }
+            />
+            <p/>
+          </div>
+        </div>
         </Dialog>
       </div>
     );

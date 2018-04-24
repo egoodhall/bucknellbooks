@@ -117,7 +117,7 @@ class UserPage extends Component {
             onSelectBook={(book) => console.log(book)}
             data={this.state.books || []}
           />
-          <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook}/>
+          <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
         </div>
         <div style={{ height: 60 }}/>
       </div>
