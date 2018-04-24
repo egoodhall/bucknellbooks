@@ -146,7 +146,7 @@ class SearchPage extends Component {
           <FloatingActionButton
             secondary={true}
             style={styles.fab}
-            onClick={this.createNewBook.bind(this)}>
+            onClick={this.onOpenAddBook}>
             <ContentAdd />
           </FloatingActionButton>
         }
