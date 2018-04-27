@@ -103,7 +103,6 @@ class SearchPage extends Component {
         if (res.success !== true) {
           console.log('Error!');
         } else {
-          console.log(res.data);
           this.setState({
             currentSearch: {
               queryText: this.state.queryText,

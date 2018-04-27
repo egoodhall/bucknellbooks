@@ -4,6 +4,7 @@ import _ from 'lodash';
 import windowSize from 'react-window-size';
 import * as Typicons from 'react-icons/lib/ti';
 import Dotdotdot from 'react-dotdotdot';
+import CurrencyFormatter from 'currency-formatter';
 
 const getStyles = (props, state) => ({
   card: {
@@ -103,7 +104,7 @@ class BookGrid extends Component {
         <CardText>
           <div style={styles.card.text}>
           {this.props.onSelectBook && this.getChip.bind(this)(book)}
-          <h1 style={styles.card.text.price}>${book.price}</h1>
+          <h1 style={styles.card.text.price}>${CurrencyFormatter.format(book.price, { code: 'en-US' })}</h1>
           </div>
           <div title={book.title}>
             <Dotdotdot

@@ -62,7 +62,6 @@ class UserPage extends Component {
         if (res.success !== true) {
           console.log('Error!');
         } else {
-          console.log(res.data);
           this.setState({
             books: res.data
           });
@@ -80,7 +79,6 @@ class UserPage extends Component {
         if (res.success !== true) {
           console.log('Error!');
         } else {
-          console.log(res.data);
           this.updateBooks();
         }
       });
