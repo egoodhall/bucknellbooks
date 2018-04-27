@@ -64,7 +64,7 @@ class AddBookModal extends Component {
           console.log('Error!');
         }
       });
-    this.props.closeModal();
+    this.props.closeModal(true);
     this.setState({
       title: '',
       isbn: '',

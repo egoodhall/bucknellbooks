@@ -101,8 +101,14 @@ class UserPage extends Component {
     this.setState({isAddingBook: true});
   }
 
-  onCloseAddBook() {
-    this.setState({isAddingBook: false});
+  onCloseAddBook(refresh = false) {
+    this.setState(
+      {isAddingBook: false},
+      () => {
+        if (refresh) {
+          this.updateBooks();
+        }
+      });
   }
 
   render() {

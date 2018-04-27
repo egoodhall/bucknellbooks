@@ -9,7 +9,6 @@ const respondData = (req, res) => {
       res.status(500).json(wrap(false, err.message));
       return;
     }
-    console.log(data);
     // Return data
     res.json(wrap(true, data.hits.hits));
   };

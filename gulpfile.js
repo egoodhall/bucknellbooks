@@ -42,7 +42,8 @@ gulp.task('build', ['build-ui'], () => {
   // Move static files
   gulp.src(path.join(staticDir, 'imageFiles', '*')).pipe(gulp.dest(path.join(buildDir, 'static', 'imageFiles')));
   gulp.src(path.join(staticDir, 'index.html')).pipe(gulp.dest(path.join(buildDir, 'static')));
-  gulp.src(path.join(staticDir, 'js', '*.js')).pipe(gulp.dest(path.join(buildDir, 'static', 'js')));
+  gulp.src(path.join(staticDir, 'index.css')).pipe(gulp.dest(path.join(buildDir, 'static')));
+  gulp.src(path.join(staticDir, 'js', 'bundle.js')).pipe(gulp.dest(path.join(buildDir, 'static', 'js')));
 });
 
 // Build the UI

@@ -29,6 +29,14 @@ const getStyles = (props, state) => ({
         fontWeight: 200,
         margin: 0
       }
+    },
+    new: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '90%',
+      width: '90%',
+      padding: '5%'
     }
   },
   grid: {
@@ -141,10 +149,8 @@ class BookGrid extends Component {
     if (this.props.onCreate !== undefined) {
       cards.unshift(
         <Card style={styles.newcard} onClick={this.props.onCreate} key={-1}>
-          <CardText>
-            <p style={styles.newcard.text}>&nbsp;</p>
+          <CardText style={styles.card.new}>
             <p style={styles.newcard.text}>Add New Book</p>
-            <p style={styles.newcard.text}>&nbsp;</p>
           </CardText>
         </Card>
       );
