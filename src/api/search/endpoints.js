@@ -19,7 +19,7 @@ const search = (req, res) => {
     multi_match: {
       query: req.query.text,
       fuzziness: 2,
-      fields: [ 'title', 'isbn', 'courseDpt' ],
+      fields: [ 'title', 'isbn', 'course' ],
       slop: 10
     }
   },
