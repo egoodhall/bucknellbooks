@@ -152,13 +152,6 @@ class SearchPage extends Component {
               + Book
             </RaisedButton>
           }
-          <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
-          <Contact
-            open={this.state.isContactOpen}
-            onRequestClose={this.closeContact.bind(this)}
-            gUser={this.props.gUser}
-            recipient={this.state.recipient || ''}
-          />
         </Paper>
         <BookGrid
           style={{ marginTop: '96px' }}
@@ -174,6 +167,13 @@ class SearchPage extends Component {
           </FloatingActionButton>
         }
         <WelcomeMessage gUser={this.props.gUser}/>
+        <AddBookModal isOpen={this.state.isAddingBook} closeModal={this.onCloseAddBook} gUser={this.props.gUser}/>
+        <Contact
+          open={this.state.isContactOpen}
+          onRequestClose={this.closeContact.bind(this)}
+          gUser={this.props.gUser}
+          recipient={this.state.recipient || ''}
+        />
       </div>
     );
   }
