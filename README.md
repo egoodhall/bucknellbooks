@@ -8,9 +8,10 @@ A simple web application for facilitating the resale of textbooks. This was crea
 2. Install [nodejs](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html), [docker](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html), and [docker-compose](https://docs.docker.com/compose/install/) on the instance.
 3. Clone the textbook anarchy repository.
 4. Standing in the root of the repository, run `npm install` to install all javascript dependencies.
-5. Run `npm run build` to build the server and frontend code.
-6. Run `docker-compose up` to create the docker containers and start them.
-7. Connect to your instance by going to `instance.public.ip.address:8080` (or the load balancer's dns name)
+5. Copy your `cfg.js` into the `src` directory of the repo.
+6. Run `npm run build` to build the server and frontend code.
+7. Run `docker-compose up` to create the docker containers and start them.
+8. Connect to your instance by going to `instance.public.ip.address:8080` (or the load balancer's dns name)
 
 ## Data Models
 Books are the primary data model for our application. Through books, users are able to post new books up for sale that others can purchase.
