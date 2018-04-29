@@ -44,6 +44,9 @@ else
   echo $(colorize '✔ Found yarn install:' 2) $(yarn --version)
 fi
 
+# Load OAuth key
+export OAUTH_KEY=$(./scripts/utils/read.js ./src/cfg.js oauthKey)
+
 # Start frontend and backend watching servers
 # docker-compose start db elasticsearch 2>&1 | tee ${logdir}/docker.log | log 'dev-services' 2 &
 $build_tool dev-server 2>&1 | tee ${logdir}/backend.log | log 'dev-backend ' 4 &

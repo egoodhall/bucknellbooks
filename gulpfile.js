@@ -10,9 +10,9 @@ var path = require('path');
 var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
+var cfg = require('./src/cfg');
 
 const buildDir = path.join(__dirname, 'build');
-const configDir = path.join(__dirname, 'configuration');
 const staticDir = path.join(__dirname, 'src', 'static');
 const jsDir = path.join(staticDir, 'js');
 
@@ -28,7 +28,10 @@ gulp.task('build', ['build-ui'], () => {
     delete _json.scripts.build;
     delete _json.scripts.clean;
     delete _json.scripts.lint;
+    delete _json.scripts['dev-static'];
+    delete _json.scripts['dev-server'];
     delete _json.devDependencies;
+    delete _json.nodemonConfig;
     _json.scripts.start = 'NODE_ENV=production node index.js';
     return _json;
   })).pipe(gulp.dest(buildDir));
@@ -52,12 +55,13 @@ gulp.task('build-ui', () => {
     entries: path.join(jsDir, 'app.jsx'),
     debug: false,
     transform: [
-      ['envify', {
-        NODE_ENV: 'development'
-      }],
       ['babelify', {
         presets: ['env', 'react'],
         plugins: ['transform-decorators-legacy', 'transform-object-rest-spread']
+      }],
+      ['envify', {
+        NODE_ENV: 'development',
+        OAUTH_KEY: cfg.oauthKey
       }]
     ]
   })

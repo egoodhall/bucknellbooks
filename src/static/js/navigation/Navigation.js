@@ -31,7 +31,7 @@ class Navigation extends React.Component {
         //init google gapi auth2 everytime any page loads
     window.gapi.load('auth2', () => {
       window.gapi.auth2.init({
-        client_id: '305804458345-o03pt3f7heup0c2vlk03p376du73bjsm.apps.googleusercontent.com',
+        client_id: process.env.OAUTH_KEY,
         fetch_basic_profile: true
       })
           .then((auth2)=>{
